@@ -1,0 +1,158 @@
+{
+  "membres": [
+    {
+      "id": "1",
+      "nom": "Admin",
+      "prenom": "System",
+      "email": "admin@fashionapp.com",
+      "telephone": "0123456789",
+      "role": "admin",
+      "dateInscription": "2023-01-01",
+      "uid": "cUclYFd0SlRXaUc11pJPIXDeNus2"
+    },
+    {
+      "id": "2",
+      "nom": "Dupont",
+      "prenom": "Marie",
+      "email": "marie.dupont@email.com",
+      "telephone": "0123456789",
+      "role": "designer",
+      "dateInscription": "2023-01-15",
+      "uid": "SsSevmf3EtUUcQl1vw6jmykbP7n2"
+    }
+  ],
+  "designers": [
+    {
+      "id": "1",
+      "membreId": 2,
+      "specialite": "Haute Couture",
+      "anneesExperience": 8
+    }
+  ],
+  "stagiaires": [],
+  "clients": [
+    {
+      "id": "1",
+      "nom": "Martin",
+      "prenom": "Jean",
+      "email": "jean.martin@email.com",
+      "telephone": "0678901234"
+    },
+    {
+      "id": 0,
+      "nom": "ghofrane",
+      "prenom": "triki",
+      "email": "ena@gmail.com",
+      "telephone": "25141113"
+    }
+  ],
+  "collections": [
+    {
+      "id": "1",
+      "designerId": 1,
+      "nom": "Printemps Lumineux",
+      "saison": "Printemps/Été 2024",
+      "type": "Prêt-à-porter",
+      "description": "Collection inspirée par les couleurs vives du printemps",
+      "dateCreation": "2023-09-15",
+      "images": [
+        "collection1-1.jpg",
+        "collection1-2.jpg"
+      ]
+    },
+    {
+      "id": "0b60",
+      "nom": "sifalachta",
+      "saison": "Automne/Hiver",
+      "type": "Prêt-à-porter",
+      "description": "chihemmek",
+      "designerId": 1,
+      "dateCreation": "2025-04-19T11:00:46.042Z"
+    },
+    {
+      "id": "8f2f",
+      "nom": "test",
+      "saison": "Automne/Hiver",
+      "type": "Haute Couture",
+      "description": "mchmochkl",
+      "images": [],
+      "designerId": 1,
+      "dateCreation": "2025-04-19T11:14:24.889Z"
+    }
+  ],
+  "defiles": [
+    {
+      "id": "1",
+      "nom": "Gala Printemps 2024",
+      "date": "2024-04-15T19:00:00",
+      "lieu": "Palais des Congrès",
+      "nbPlacesTotal": 100,
+      "description": "Présentation de la collection Printemps/Été 2024",
+      "collectionId": 1
+    }
+  ],
+  "places": [
+    {
+      "id": "1",
+      "defileId": 1,
+      "numero": "A1",
+      "statut": "reserve",
+      "reservationId": 0
+    },
+    {
+      "id": "2",
+      "defileId": 1,
+      "numero": "A2",
+      "statut": "reserve",
+      "reservationId": 0
+    }
+  ],
+  "formations": [
+    {
+      "id": "1",
+      "designerId": 1,
+      "titre": "Introduction à la Haute Couture",
+      "description": "Les bases des techniques de haute couture pour débutants",
+      "dateDebut": "2024-05-10",
+      "duree": 5,
+      "nbPlacesMax": 10
+    }
+  ],
+  "reservations-defiles": [
+    {
+      "id": 0,
+      "clientId": 0,
+      "defileId": 1,
+      "dateReservation": "2025-04-19T10:24:07.989Z",
+      "nbPlaces": 2,
+      "placesIds": [
+        "1",
+        "2"
+      ]
+    }
+  ],
+  "demandes-stages": [
+    {
+      "id": 0,
+      "nom": "ghoo",
+      "prenom": "ssss",
+      "email": "enaaaa@gmail.com",
+      "telephone": "12312312",
+      "designerId": "1",
+      "message": "ffff",
+      "dateCreation": "2025-04-19T10:26:40.451Z",
+      "statut": "en_attente"
+    }
+  ],
+  "inscriptions-formations": [],
+  "materiels": [
+    {
+      "id": "1",
+      "nom": "Machine à coudre Singer",
+      "type": "machine",
+      "dateAchat": "2023-01-10",
+      "etat": "neuf",
+      "disponible": true
+    }
+  ]
+}

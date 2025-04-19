@@ -1,0 +1,81 @@
+<div class="collection-form-container">
+    <div class="header">
+      <button mat-button routerLink="/designer/collections">
+        <mat-icon>arrow_back</mat-icon> Retour
+      </button>
+      <h1>{{ isEditMode ? 'Modifier la Collection' : 'Nouvelle Collection' }}</h1>
+    </div>
+  
+    <form [formGroup]="collectionForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom de la collection</mat-label>
+          <input matInput formControlName="nom" placeholder="Ex: Printemps 2023">
+          <mat-error *ngIf="collectionForm.get('nom')?.hasError('required')">
+            Le nom est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Saison</mat-label>
+          <mat-select formControlName="saison">
+            <mat-option value="Printemps/Été">Printemps/Été</mat-option>
+            <mat-option value="Automne/Hiver">Automne/Hiver</mat-option>
+            <mat-option value="Croisière">Croisière</mat-option>
+          </mat-select>
+          <mat-error *ngIf="collectionForm.get('saison')?.hasError('required')">
+            La saison est obligatoire
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="Prêt-à-porter">Prêt-à-porter</mat-option>
+            <mat-option value="Haute Couture">Haute Couture</mat-option>
+            <mat-option value="Accessoires">Accessoires</mat-option>
+          </mat-select>
+          <mat-error *ngIf="collectionForm.get('type')?.hasError('required')">
+            Le type est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="4"
+                    placeholder="Décrivez l'inspiration et les caractéristiques de votre collection"></textarea>
+        </mat-form-field>
+      </div>
+  
+      <!-- Image Upload Section -->
+      <div class="form-row">
+        <div class="image-upload-section">
+          <h3>Images de la collection</h3>
+          <div class="image-preview-container">
+            <div class="image-preview" *ngFor="let image of previewImages; let i = index">
+              <img [src]="image" alt="Collection preview">
+              <button mat-icon-button class="remove-image" (click)="removeImage(i)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+            <label for="file-upload" class="upload-button">
+              <mat-icon>add_photo_alternate</mat-icon>
+              <span>Ajouter des images</span>
+              <input id="file-upload" type="file" multiple accept="image/*" (change)="onFileSelected($event)" style="display: none;">
+            </label>
+          </div>
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="collectionForm.invalid || loading">
+          <span *ngIf="!loading">{{ isEditMode ? 'Mettre à jour' : 'Créer' }}</span>
+          <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+        </button>
+      </div>
+    </form>
+  </div>

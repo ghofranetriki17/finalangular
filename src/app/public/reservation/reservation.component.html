@@ -1,0 +1,101 @@
+<div class="reservation-container">
+  <a mat-button [routerLink]="['/defiles']">
+    <mat-icon>arrow_back</mat-icon> Back to shows
+  </a>
+  
+  <h1>Seat Reservation</h1>
+  
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <div *ngIf="error" class="error-container">
+    <p>Error loading information. Please try again later.</p>
+    <button mat-raised-button color="primary" routerLink="/defiles">Back to shows</button>
+  </div>
+  
+  <div *ngIf="!loading && !error" class="reservation-content">
+    <div *ngIf="defile" class="defile-info">
+      <h2>{{ defile.nom }}</h2>
+      <p><strong>Date:</strong> {{ defile.date | date:'longDate' }} at {{ defile.date | date:'shortTime' }}</p>
+      <p><strong>Location:</strong> {{ defile.lieu }}</p>
+    </div>
+    
+    <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="reservation-form">
+      <h3>Your Information</h3>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="nom" placeholder="Your last name">
+          <mat-error *ngIf="reservationForm.get('nom')?.hasError('required')">
+            Last name is required
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="prenom" placeholder="Your first name">
+          <mat-error *ngIf="reservationForm.get('prenom')?.hasError('required')">
+            First name is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="Your email" type="email">
+          <mat-error *ngIf="reservationForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="reservationForm.get('email')?.hasError('email')">
+            Invalid email format
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="telephone" placeholder="Your phone (optional)">
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Number of seats</mat-label>
+          <input matInput formControlName="nbPlaces" type="number" min="1" max="10">
+          <mat-error *ngIf="reservationForm.get('nbPlaces')?.hasError('required')">
+            Number of seats is required
+          </mat-error>
+          <mat-error *ngIf="reservationForm.get('nbPlaces')?.hasError('min')">
+            Minimum 1 seat
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <h3>Select Seats</h3>
+      <p>Please select {{ reservationForm.get('nbPlaces')?.value }} seat(s)</p>
+      
+      <div class="places-grid">
+        <div *ngFor="let place of places" 
+             class="place" 
+             [class.selected]="selectedPlaces.includes(place.id)"
+             (click)="togglePlaceSelection(place.id)">
+          {{ place.numero }}
+        </div>
+        
+        <div *ngIf="places.length === 0" class="no-places">
+          <p>No available seats for this show</p>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit" 
+                [disabled]="reservationForm.invalid || selectedPlaces.length === 0 || submitting">
+          <span *ngIf="!submitting">Confirm Reservation</span>
+          <mat-spinner *ngIf="submitting" diameter="20"></mat-spinner>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

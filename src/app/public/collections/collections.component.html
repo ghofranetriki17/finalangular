@@ -1,0 +1,35 @@
+<div class="collections-container">
+    <h1>Nos Collections</h1>
+    
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+    
+    <div *ngIf="error" class="error-container">
+      <p>Une erreur est survenue lors du chargement des collections. Veuillez réessayer plus tard.</p>
+      <button mat-raised-button color="primary" (click)="loadCollections()">Réessayer</button>
+    </div>
+    
+    <div *ngIf="!loading && !error" class="collections-grid">
+      <mat-card *ngFor="let collection of collections" class="collection-card">
+        <mat-card-header>
+          <mat-card-title>{{ collection.nom }}</mat-card-title>
+          <mat-card-subtitle>{{ collection.saison }} - {{ collection.type }}</mat-card-subtitle>
+        </mat-card-header>
+        
+        <img mat-card-image *ngIf="collection.images && collection.images.length" 
+             src="assets/images/{{ collection.images[0] }}" 
+             alt="{{ collection.nom }}"
+             onerror="this.src='assets/images/placeholder.jpg'">
+        
+        <mat-card-content>
+          <p *ngIf="collection.description">{{ collection.description }}</p>
+          <p *ngIf="collection.designer">Designer: {{ collection.designer.membre?.prenom }} {{ collection.designer.membre?.nom }}</p>
+        </mat-card-content>
+      </mat-card>
+      
+      <div *ngIf="collections.length === 0" class="no-collections">
+        <p>Aucune collection disponible pour le moment.</p>
+      </div>
+    </div>
+  </div>

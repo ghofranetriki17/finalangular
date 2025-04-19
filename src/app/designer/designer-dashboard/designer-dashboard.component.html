@@ -1,0 +1,85 @@
+<p>designer-dashboard works!</p>
+<div class="dashboard-container">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Chargement de votre espace designer...</p>
+    </div>
+  
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error-container">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h2>Une erreur est survenue</h2>
+      <p>Impossible de charger vos informations. Veuillez réessayer plus tard.</p>
+      <button mat-raised-button color="primary" (click)="loadDesignerData()">
+        <mat-icon>refresh</mat-icon> Réessayer
+      </button>
+    </div>
+  
+    <!-- Content -->
+    <div *ngIf="!loading && !error" class="content-container">
+      <!-- Header -->
+      <div class="header">
+        <h1>Tableau de bord Designer</h1>
+        <button mat-raised-button color="warn" (click)="logout()">
+          <mat-icon>logout</mat-icon> Déconnexion
+        </button>
+      </div>
+  
+      <!-- Profile Info -->
+      <mat-card class="profile-card">
+        <mat-card-header>
+          <div mat-card-avatar class="profile-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <mat-card-title>{{ membre?.prenom }} {{ membre?.nom }}</mat-card-title>
+          <mat-card-subtitle>Designer - {{ designer?.specialite }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><mat-icon>email</mat-icon> {{ membre?.email }}</p>
+          <p *ngIf="membre?.telephone"><mat-icon>phone</mat-icon> {{ membre?.telephone }}</p>
+          <p><mat-icon>work</mat-icon> {{ designer?.anneesExperience }} ans d'expérience</p>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <button mat-raised-button color="primary" (click)="navigateToNewCollection()">
+          <mat-icon>add</mat-icon> Nouvelle Collection
+        </button>
+        <button mat-raised-button (click)="navigateToCollectionsList()">
+          <mat-icon>collections</mat-icon> Voir toutes mes collections
+        </button>
+      </div>
+  
+      <!-- Recent Collections -->
+      <h2>Vos dernières collections</h2>
+      <div *ngIf="collections.length > 0; else noCollections" class="collections-grid">
+        <mat-card *ngFor="let collection of collections" class="collection-card">
+          <mat-card-header>
+            <mat-card-title>{{ collection.nom }}</mat-card-title>
+            <mat-card-subtitle>{{ collection.saison }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ collection.description || 'Aucune description disponible' }}</p>
+            <p><strong>Créée le:</strong> {{ collection.dateCreation | date:'mediumDate' }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary" [routerLink]="['/designer/collections/edit', collection.id]">
+              <mat-icon>edit</mat-icon> Modifier
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+  
+      <ng-template #noCollections>
+        <div class="no-collections">
+          <mat-icon>inventory_2</mat-icon>
+          <p>Vous n'avez pas encore créé de collections</p>
+          <button mat-raised-button color="primary" (click)="navigateToNewCollection()">
+            <mat-icon>add</mat-icon> Créer votre première collection
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>

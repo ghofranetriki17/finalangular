@@ -1,0 +1,61 @@
+<div class="collection-list-container">
+    <div class="header">
+      <h1>Mes Collections</h1>
+      <button mat-raised-button color="primary" routerLink="/designer/collections/new">
+        <mat-icon>add</mat-icon> Nouvelle Collection
+      </button>
+    </div>
+  
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <div *ngIf="!loading">
+      <table mat-table [dataSource]="collections" class="mat-elevation-z8">
+        <!-- Name Column -->
+        <ng-container matColumnDef="nom">
+          <th mat-header-cell *matHeaderCellDef>Nom</th>
+          <td mat-cell *matCellDef="let collection">{{ collection.nom }}</td>
+        </ng-container>
+  
+        <!-- Season Column -->
+        <ng-container matColumnDef="saison">
+          <th mat-header-cell *matHeaderCellDef>Saison</th>
+          <td mat-cell *matCellDef="let collection">{{ collection.saison }}</td>
+        </ng-container>
+  
+        <!-- Type Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let collection">{{ collection.type }}</td>
+        </ng-container>
+  
+        <!-- Date Column -->
+        <ng-container matColumnDef="dateCreation">
+          <th mat-header-cell *matHeaderCellDef>Date de Création</th>
+          <td mat-cell *matCellDef="let collection">{{ collection.dateCreation | date:'mediumDate' }}</td>
+        </ng-container>
+  
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let collection">
+            <button mat-icon-button color="primary" (click)="editCollection(collection.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteCollection(collection.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  
+      <div *ngIf="collections.length === 0" class="no-collections">
+        <mat-icon>inventory_2</mat-icon>
+        <p>Aucune collection trouvée</p>
+      </div>
+    </div>
+  </div>
