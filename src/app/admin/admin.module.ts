@@ -43,6 +43,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import { DesignersListComponent } from './designers/designers-list/designers-list.component';
 import { DesignerFormComponent } from './designers/designer-form/designer-form.component';
+import { StagiairesListComponent } from './stagiaires/stagiaires-list/stagiaires-list.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'collections', pathMatch: 'full' },
       { path: 'designers', component: DesignersListComponent },
+      { path: 'stagiaires', component: StagiairesListComponent },
       { path: 'designers/add', component: DesignerFormComponent },
       /*{ path: 'designers/edit/:id', component: DesignerFormComponent },
       { path: 'collections', component: CollectionsListComponent },
@@ -76,6 +78,7 @@ const routes: Routes = [
     AdminDashboardComponent,
     DesignersListComponent,
     DesignerFormComponent,
+    StagiairesListComponent,
     //DesignersListComponent,
     //DesignerFormComponent,
     //CollectionsListComponent,
@@ -116,7 +119,10 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatListModule,
     MatMenuModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule,
+    CommonModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

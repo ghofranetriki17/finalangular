@@ -10,6 +10,7 @@ import { ReservationDefile } from '../../models/reservation-defile';
 import { Place } from '../../models/place';
 import { Client } from 'src/app/models/client';
 import { Designer } from 'src/app/models/designer';
+import { Stagiaire } from 'src/app/models/stagiaire';
 
 @Injectable({
   providedIn: 'root'
@@ -103,4 +104,35 @@ export class ApiService {
   updateCollectionWithImages(id: number, formData: FormData): Observable<any> {
     return this.http.put(`/api/collections/${id}/with-images`, formData);
   }
+
+
+
+  // In api.service.ts
+// Add these methods to the ApiService class
+
+// Stagiaires
+getStagiaires(): Observable<Stagiaire[]> {
+  return this.http.get<Stagiaire[]>(`${this.apiUrl}/stagiaires`);
+}
+
+getStagiaire(id: number): Observable<Stagiaire> {
+  return this.http.get<Stagiaire>(`${this.apiUrl}/stagiaires/${id}`);
+}
+
+createStagiaire(stagiaire: Stagiaire): Observable<Stagiaire> {
+  return this.http.post<Stagiaire>(`${this.apiUrl}/stagiaires`, stagiaire);
+}
+
+updateStagiaire(stagiaire: Stagiaire): Observable<Stagiaire> {
+  return this.http.put<Stagiaire>(`${this.apiUrl}/stagiaires/${stagiaire.id}`, stagiaire);
+}
+
+deleteStagiaire(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/stagiaires/${id}`);
+}
+
+// For getting stagiaires by designer (tutor)
+getStagiairesByDesigner(designerId: number): Observable<Stagiaire[]> {
+  return this.http.get<Stagiaire[]>(`${this.apiUrl}/stagiaires?designerTuteurId=${designerId}`);
+}
 }
