@@ -1,0 +1,88 @@
+<p>designer-form works!</p>
+<!-- src/app/admin/designers/designer-form/designer-form.component.html -->
+<div class="container">
+    <h2>{{ isEdit ? 'Modifier' : 'Ajouter' }} un designer</h2>
+  
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  
+    <form [formGroup]="designerForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="nom" placeholder="Nom du designer">
+          <mat-error *ngIf="designerForm.get('nom')">
+            Le nom est obligatoire
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="prenom" placeholder="Prénom du designer">
+          <mat-error *ngIf="designerForm.get('prenom')">
+            Le prénom est obligatoire
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Email du designer">
+          <mat-error *ngIf="designerForm.get('email')">
+            L'email est obligatoire
+          </mat-error>
+          <mat-error *ngIf="designerForm.get('email')">
+            Format d'email invalide
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="telephone" placeholder="Numéro de téléphone">
+        </mat-form-field>
+      </div>
+  
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Spécialité</mat-label>
+          <input matInput formControlName="specialite" placeholder="Spécialité du designer">
+          <mat-error *ngIf="designerForm.get('specialite')">
+            La spécialité est obligatoire
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Années d'expérience</mat-label>
+          <input matInput formControlName="anneesExperience" type="number" min="0" placeholder="Années d'expérience">
+          <mat-error *ngIf="designerForm.get('anneesExperience')">
+            Les années d'expérience sont obligatoires
+          </mat-error>
+          <mat-error *ngIf="designerForm.get('anneesExperience')">
+            Les années d'expérience doivent être positives
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="form-row" *ngIf="!isEdit">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Mot de passe</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Mot de passe">
+          <mat-error *ngIf="designerForm.get('password')">
+            Le mot de passe est obligatoire
+          </mat-error>
+          <mat-error *ngIf="designerForm.get('password')">
+            Le mot de passe doit contenir au moins 6 caractères
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <div class="button-row">
+        <button mat-button type="button" (click)="cancel()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="designerForm.invalid || isLoading">
+          {{ isEdit ? 'Mettre à jour' : 'Ajouter' }}
+        </button>
+      </div>
+    </form>
+  </div>

@@ -1,6 +1,26 @@
 {
   "membres": [
     {
+      "id": "6",
+      "nom": "Saint-Laurent",
+      "prenom": "Yves",
+      "email": "yves@saintlaurent.com",
+      "telephone": "0123456781",
+      "role": "designer",
+      "dateInscription": "2025-04-20",
+      "uid": "XyZ123abc456"
+    },
+    {
+      "id": "7",
+      "nom": "Lagerfeld",
+      "prenom": "Karl",
+      "email": "karl@chanel.com",
+      "telephone": "0123456782",
+      "role": "designer",
+      "dateInscription": "2025-04-20",
+      "uid": "Def789ghi012"
+    },
+    {
       "id": "1",
       "nom": "Admin",
       "prenom": "System",
@@ -19,17 +39,104 @@
       "role": "designer",
       "dateInscription": "2023-01-15",
       "uid": "SsSevmf3EtUUcQl1vw6jmykbP7n2"
+    },
+    {
+      "id": "8",
+      "nom": "Dubois",
+      "prenom": "Sophie",
+      "email": "sophie.dubois@email.com",
+      "telephone": "0123456783",
+      "role": "stagiaire",
+      "dateInscription": "2025-04-20",
+      "uid": "Stag123456789"
+    },
+    {
+      "id": "9",
+      "nom": "Martin",
+      "prenom": "Luc",
+      "email": "luc.martin@email.com",
+      "telephone": "0123456784",
+      "role": "stagiaire",
+      "dateInscription": "2025-04-20",
+      "uid": "Stag987654321"
+    },
+    {
+      "id": "5",
+      "nom": "ghofghof",
+      "prenom": "chihhhhemek",
+      "email": "fofa@gmail.com",
+      "telephone": "25141113",
+      "role": "designer",
+      "dateInscription": "2025-04-19T12:02:44.460Z",
+      "uid": "R9uVMln8pqa94PA4VC25mJ1KIEz2"
+    },
+    {
+      "id": 0,
+      "nom": "please",
+      "prenom": "work",
+      "email": "please@gmail.com",
+      "telephone": "25141113",
+      "role": "designer",
+      "dateInscription": "2025-04-19T12:21:47.212Z",
+      "uid": "vGpnsUTyEWQxA8KylU2OdF7ud9C3"
     }
   ],
   "designers": [
+    {
+      "id": "6",
+      "membreId": 6,
+      "specialite": "Prêt-à-porter Luxe",
+      "anneesExperience": 15
+    },
+    {
+      "id": "7",
+      "membreId": 7,
+      "specialite": "Haute Couture",
+      "anneesExperience": 20
+    },
+    {
+      "id": "8",
+      "membreId": 5,
+      "specialite": "Accessoires",
+      "anneesExperience": 5
+    },
     {
       "id": "1",
       "membreId": 2,
       "specialite": "Haute Couture",
       "anneesExperience": 8
+    },
+    {
+      "id": "5",
+      "membreId": 0,
+      "specialite": "all",
+      "anneesExperience": 3
+    },
+    {
+      "id": 0,
+      "membreId": 0,
+      "specialite": "cottura",
+      "anneesExperience": 8
     }
   ],
-  "stagiaires": [],
+  "stagiaires": [   {
+    "id": "1",
+    "membreId": 8,
+    "designerTuteurId": 1,  
+    "dateDebut": "2025-04-20",
+    "dateFin": "2025-07-20",
+    "domaine": "Haute Couture",
+    "ecole": "École de la Chambre Syndicale de la Couture Parisienne"
+  },
+  {
+    "id": "2",
+    "membreId": 9,
+    "designerTuteurId": 7,  
+    "dateDebut": "2025-04-20",
+    "dateFin": "2025-10-20",
+    "domaine": "Accessoires",
+    "ecole": "Institut Français de la Mode"
+  }],
   "clients": [
     {
       "id": "1",
@@ -39,7 +146,7 @@
       "telephone": "0678901234"
     },
     {
-      "id": 0,
+      "id": "0",
       "nom": "ghofrane",
       "prenom": "triki",
       "email": "ena@gmail.com",
@@ -78,6 +185,16 @@
       "images": [],
       "designerId": 1,
       "dateCreation": "2025-04-19T11:14:24.889Z"
+    },
+    {
+      "id": "e1b4",
+      "nom": "WWW",
+      "saison": "Automne/Hiver",
+      "type": "Haute Couture",
+      "description": "WWW",
+      "images": [],
+      "designerId": 1,
+      "dateCreation": "2025-04-19T11:28:56.937Z"
     }
   ],
   "defiles": [
@@ -120,7 +237,7 @@
   ],
   "reservations-defiles": [
     {
-      "id": 0,
+      "id": "0",
       "clientId": 0,
       "defileId": 1,
       "dateReservation": "2025-04-19T10:24:07.989Z",
@@ -133,7 +250,7 @@
   ],
   "demandes-stages": [
     {
-      "id": 0,
+      "id": "0",
       "nom": "ghoo",
       "prenom": "ssss",
       "email": "enaaaa@gmail.com",

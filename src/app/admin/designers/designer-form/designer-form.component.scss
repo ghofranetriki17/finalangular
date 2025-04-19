@@ -1,0 +1,43 @@
+/* src/app/admin/designers/designer-form/designer-form.component.scss */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #3f51b5;
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    gap: 16px;
+  }
+  
+  .form-field {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .button-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    gap: 16px;
+  }
+  
+  @media (max-width: 600px) {
+    .form-field {
+      flex: 0 0 100%;
+    }
+  }

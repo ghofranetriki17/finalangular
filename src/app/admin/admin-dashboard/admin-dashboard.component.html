@@ -1,0 +1,31 @@
+<!-- src/app/admin/admin-dashboard/admin-dashboard.component.html -->
+<div class="admin-dashboard">
+    <mat-toolbar color="primary" class="admin-toolbar">
+      <span>Admin Dashboard - Fashion Management</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </mat-toolbar>
+  
+    <div class="admin-content">
+      <mat-card class="navigation-card">
+        <mat-card-content>
+          <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+            <a mat-tab-link
+               *ngFor="let link of navLinks"
+               [routerLink]="link.path"
+               routerLinkActive #rla="routerLinkActive"
+               [active]="rla.isActive">
+              {{link.label}}
+            </a>
+          </nav>
+          <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+        </mat-card-content>
+      </mat-card>
+  
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>

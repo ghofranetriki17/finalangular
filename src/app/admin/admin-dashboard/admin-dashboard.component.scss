@@ -1,0 +1,33 @@
+/* src/app/admin/admin-dashboard/admin-dashboard.component.scss */
+.admin-dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .admin-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .admin-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .navigation-card {
+    margin-bottom: 20px;
+  }
+  
+  .main-content {
+    background-color: white;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
