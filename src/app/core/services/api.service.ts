@@ -135,4 +135,36 @@ deleteStagiaire(id: number): Observable<any> {
 getStagiairesByDesigner(designerId: number): Observable<Stagiaire[]> {
   return this.http.get<Stagiaire[]>(`${this.apiUrl}/stagiaires?designerTuteurId=${designerId}`);
 }
+
+
+
+
+
+// Ajouter ces méthodes à votre src/app/core/services/api.service.ts
+
+// Défilés
+createDefile(defile: Defile): Observable<Defile> {
+  return this.http.post<Defile>(`${this.apiUrl}/defiles`, defile);
+}
+
+updateDefile(defile: Defile): Observable<Defile> {
+  return this.http.put<Defile>(`${this.apiUrl}/defiles/${defile.id}`, defile);
+}
+
+deleteDefile(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/defiles/${id}`);
+}
+
+// Réservations défilés
+getReservationsByDefile(defileId: number): Observable<ReservationDefile[]> {
+  return this.http.get<ReservationDefile[]>(`${this.apiUrl}/reservations-defiles?defileId=${defileId}&_expand=client&_expand=defile`);
+}
+
+getReservationsWithDetails(): Observable<ReservationDefile[]> {
+  return this.http.get<ReservationDefile[]>(`${this.apiUrl}/reservations-defiles?_expand=client&_expand=defile`);
+}
+
+getReservation(id: number): Observable<ReservationDefile> {
+  return this.http.get<ReservationDefile>(`${this.apiUrl}/reservations-defiles/${id}?_expand=client&_expand=defile`);
+}
 }

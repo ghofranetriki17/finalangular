@@ -1,40 +1,45 @@
 <div class="defiles-container">
+  <div class="title-section">
     <h1>Nos Défilés</h1>
-    
-    <div *ngIf="loading" class="loading-container">
-      <mat-spinner></mat-spinner>
-    </div>
-    
-    <div *ngIf="error" class="error-container">
-      <p>Une erreur est survenue lors du chargement des défilés. Veuillez réessayer plus tard.</p>
-      <button mat-raised-button color="primary" (click)="loadDefiles()">Réessayer</button>
-    </div>
-    
-    <div *ngIf="!loading && !error" class="defiles-list">
-      <mat-card *ngFor="let defile of defiles" class="defile-card">
-        <mat-card-header>
+    <p class="subtitle">Réservez votre place pour nos événements exclusifs</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <p>Une erreur est survenue lors du chargement des défilés. Veuillez réessayer plus tard.</p>
+    <button mat-raised-button color="primary" (click)="loadDefiles()">Réessayer</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="defiles-list">
+    <mat-card *ngFor="let defile of defiles" class="defile-card">
+      <mat-card-header>
+        <div class="header-content">
           <mat-card-title>{{ defile.nom }}</mat-card-title>
           <mat-card-subtitle>
             {{ defile.date | date:'longDate' }} à {{ defile.date | date:'shortTime' }}
           </mat-card-subtitle>
-        </mat-card-header>
-        
-        <mat-card-content>
-          <p><strong>Lieu:</strong> {{ defile.lieu }}</p>
-          <p><strong>Places disponibles:</strong> {{ defile.nbPlacesTotal }}</p>
-          <p *ngIf="defile.description">{{ defile.description }}</p>
-          <p *ngIf="defile.collection">Collection: {{ defile.collection.nom }}</p>
-        </mat-card-content>
-        
-        <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="reserverPlace(defile.id)">
-            Réserver une place
-          </button>
-        </mat-card-actions>
-      </mat-card>
-      
-      <div *ngIf="defiles.length === 0" class="no-defiles">
-        <p>Aucun défilé n'est prévu pour le moment.</p>
-      </div>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content class="card-details">
+        <p><strong>📍 Lieu :</strong> {{ defile.lieu }}</p>
+        <p><strong>🪑 Places disponibles :</strong> {{ defile.nbPlacesTotal }}</p>
+        <p *ngIf="defile.description"><strong>📝 Description :</strong> {{ defile.description }}</p>
+        <p *ngIf="defile.collection"><strong>👗 Collection :</strong> {{ defile.collection.nom }}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" class="reserve-btn" (click)="reserverPlace(defile.id)">
+          Réserver une place
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <div *ngIf="defiles.length === 0" class="no-defiles">
+      <p>Aucun défilé n'est prévu pour le moment.</p>
     </div>
   </div>
+</div>

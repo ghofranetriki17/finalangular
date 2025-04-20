@@ -1,0 +1,64 @@
+<p>reservations-list works!</p>
+<!-- src/app/admin/defiles/reservations-list/reservations-list.component.html -->
+<div class="container">
+    <div class="header">
+      <button mat-button [routerLink]="['/admin/defiles']">
+        <mat-icon>arrow_back</mat-icon> Retour aux défilés
+      </button>
+      <h1 *ngIf="defile">Réservations pour "{{ defile.nom }}"</h1>
+      <h1 *ngIf="!defile">Réservations</h1>
+    </div>
+  
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <div *ngIf="!loading">
+      <div *ngIf="reservations.length === 0" class="no-data">
+        <p>Aucune réservation pour ce défilé.</p>
+      </div>
+  
+      <mat-card *ngIf="reservations.length > 0">
+        <table mat-table [dataSource]="reservations" class="mat-elevation-z0 fullwidth-table">
+          <!-- Client Column -->
+          <ng-container matColumnDef="client">
+            <th mat-header-cell *matHeaderCellDef>Client</th>
+            <td mat-cell *matCellDef="let reservation">
+              {{ reservation.client?.nom }} {{ reservation.client?.prenom }}
+            </td>
+          </ng-container>
+  
+          <!-- Date Reservation Column -->
+          <ng-container matColumnDef="dateReservation">
+            <th mat-header-cell *matHeaderCellDef>Date de réservation</th>
+            <td mat-cell *matCellDef="let reservation">{{ formatDate(reservation.dateReservation) }}</td>
+          </ng-container>
+  
+          <!-- Nombre Places Column -->
+          <ng-container matColumnDef="nbPlaces">
+            <th mat-header-cell *matHeaderCellDef>Nombre de places</th>
+            <td mat-cell *matCellDef="let reservation">{{ reservation.nbPlaces }}</td>
+          </ng-container>
+  
+          <!-- Places Column -->
+          <ng-container matColumnDef="places">
+            <th mat-header-cell *matHeaderCellDef>Places</th>
+            <td mat-cell *matCellDef="let reservation">{{ getPlacesNumeros(reservation.places) }}</td>
+          </ng-container>
+  
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let reservation">
+              <button mat-icon-button color="primary" matTooltip="Voir détails">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card>
+    </div>
+  </div>

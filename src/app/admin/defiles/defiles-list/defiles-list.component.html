@@ -1,0 +1,72 @@
+<!-- src/app/admin/defiles/defiles-list/defiles-list.component.html -->
+<div class="container">
+    <div class="header">
+      <h1>Gestion des défilés</h1>
+      <button mat-raised-button color="primary" (click)="openDefileForm()">
+        <mat-icon>add</mat-icon> Nouveau défilé
+      </button>
+    </div>
+  
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <div *ngIf="!loading">
+      <div *ngIf="defiles.length === 0" class="no-data">
+        <p>Aucun défilé disponible.</p>
+      </div>
+  
+      <mat-card *ngIf="defiles.length > 0">
+        <table mat-table [dataSource]="defiles" class="mat-elevation-z0 fullwidth-table">
+          <!-- Nom Column -->
+          <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef>Nom</th>
+            <td mat-cell *matCellDef="let defile">{{defile.nom}}</td>
+          </ng-container>
+  
+          <!-- Date Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let defile">{{formatDate(defile.date)}}</td>
+          </ng-container>
+  
+          <!-- Lieu Column -->
+          <ng-container matColumnDef="lieu">
+            <th mat-header-cell *matHeaderCellDef>Lieu</th>
+            <td mat-cell *matCellDef="let defile">{{defile.lieu}}</td>
+          </ng-container>
+  
+          <!-- Places Column -->
+          <ng-container matColumnDef="nbPlacesTotal">
+            <th mat-header-cell *matHeaderCellDef>Places</th>
+            <td mat-cell *matCellDef="let defile">{{defile.nbPlacesTotal}}</td>
+          </ng-container>
+  
+          <!-- Collection Column -->
+          <ng-container matColumnDef="collection">
+            <th mat-header-cell *matHeaderCellDef>Collection</th>
+            <td mat-cell *matCellDef="let defile">{{defile.collection?.nom || 'Non assignée'}}</td>
+          </ng-container>
+  
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let defile">
+              <button mat-icon-button color="primary" (click)="openDefileForm(defile)" matTooltip="Modifier">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" [routerLink]="['/admin/defiles', defile.id, 'places']" matTooltip="Gérer les places">
+                <mat-icon>event_seat</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" [routerLink]="['/admin/defiles', defile.id, 'reservations']" matTooltip="Voir les réservations">
+                <mat-icon>list_alt</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card>
+    </div>
+  </div>

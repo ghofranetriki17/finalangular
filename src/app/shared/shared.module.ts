@@ -1,17 +1,26 @@
+// src/app/shared/shared.module.ts
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationComponent } from './navigation/navigation.component';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { RouterModule } from '@angular/router';
+import { PublicNavbarComponent } from '../public/public-navbar/public-navbar.component';
 
-
+// Material
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
-    NavigationComponent,
-    ConfirmDialogComponent
+    
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule
+  ],
+  exports: [
   ]
 })
 export class SharedModule { }

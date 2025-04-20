@@ -44,12 +44,17 @@ import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
 import { DesignersListComponent } from './designers/designers-list/designers-list.component';
 import { DesignerFormComponent } from './designers/designer-form/designer-form.component';
 import { StagiairesListComponent } from './stagiaires/stagiaires-list/stagiaires-list.component';
+import { DefilesListComponent } from './defiles/defiles-list/defiles-list.component';
+import { DefileFormComponent } from './defiles/defile-form/defile-form.component';
+import { ReservationsListComponent } from './defiles/reservations-list/reservations-list.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminDashboardComponent,
     children: [
+      { path: 'defiles', component: DefilesListComponent },
+      { path: 'defiles/add', component: DefileFormComponent },
       { path: '', redirectTo: 'collections', pathMatch: 'full' },
       { path: 'designers', component: DesignersListComponent },
       { path: 'stagiaires', component: StagiairesListComponent },
@@ -58,8 +63,7 @@ const routes: Routes = [
       { path: 'collections', component: CollectionsListComponent },
       { path: 'collections/add', component: CollectionFormComponent },
       { path: 'collections/edit/:id', component: CollectionFormComponent },
-      { path: 'defiles', component: DefilesListComponent },
-      { path: 'defiles/add', component: DefileFormComponent },
+     
       { path: 'defiles/edit/:id', component: DefileFormComponent },
       { path: 'formations', component: FormationsListComponent },
       { path: 'formations/add', component: FormationFormComponent },
@@ -67,8 +71,8 @@ const routes: Routes = [
       { path: 'demandes-stage', component: DemandesStageListComponent },
       { path: 'materiel', component: MaterielListComponent },
       { path: 'materiel/add', component: MaterielFormComponent },
-      { path: 'materiel/edit/:id', component: MaterielFormComponent },
-      { path: 'reservations', component: ReservationsListComponent }*/
+      { path: 'materiel/edit/:id', component: MaterielFormComponent }*/
+      { path: 'defiles/:id/reservations', component: ReservationsListComponent }
     ]
   }
 ];
@@ -79,6 +83,9 @@ const routes: Routes = [
     DesignersListComponent,
     DesignerFormComponent,
     StagiairesListComponent,
+    DefilesListComponent,
+    DefileFormComponent,
+    ReservationsListComponent,
     //DesignersListComponent,
     //DesignerFormComponent,
     //CollectionsListComponent,

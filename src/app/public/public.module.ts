@@ -25,13 +25,21 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { PublicNavbarComponent } from './public-navbar/public-navbar.component';
+import { PublicLayoutComponent } from './public-layout/public-layout.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'collections', component: CollectionsComponent },
-  { path: 'defiles', component: DefilesComponent },
-  { path: 'reservation/:id', component: ReservationComponent },
-  { path: 'demande-stage', component: DemandeStageComponent }
+  {
+    path: '',
+    component: PublicLayoutComponent, // 👈 le layout avec navbar
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'collections', component: CollectionsComponent },
+      { path: 'defiles', component: DefilesComponent },
+      { path: 'reservation/:id', component: ReservationComponent },
+      { path: 'demande-stage', component: DemandeStageComponent }
+    ]
+  }
 ];
 
 @NgModule({
@@ -40,7 +48,13 @@ const routes: Routes = [
     CollectionsComponent,
     DefilesComponent,
     ReservationComponent,
-    DemandeStageComponent
+    DemandeStageComponent,
+    PublicNavbarComponent,
+    PublicLayoutComponent
+
+  ],
+  exports: [ // 👈 Ajoute ceci
+    PublicNavbarComponent
   ],
   imports: [
     CommonModule,

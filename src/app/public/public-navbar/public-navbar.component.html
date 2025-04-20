@@ -1,0 +1,29 @@
+<nav class="public-navbar">
+    <div class="navbar-container">
+      <!-- Logo et nom du site -->
+      <div class="brand" routerLink="/">
+        <img src="assets/images/fashion-hero.jpg" alt="Logo" class="logo">
+        <span class="site-name">FashionApp</span>
+      </div>
+  
+      <!-- Liens de navigation -->
+      <div class="nav-links">
+        <a mat-button routerLink="/collections" routerLinkActive="active">Collections</a>
+        <a mat-button routerLink="/defiles" routerLinkActive="active">Défilés</a>
+        <a mat-button routerLink="/formations" routerLinkActive="active">Formations</a>
+        <a mat-button routerLink="/designers" routerLinkActive="active">Designers</a>
+      </div>
+  
+      <!-- Contact et login -->
+      <div class="nav-actions">
+        <a href="tel:+212612345678" class="phone-link">
+          <mat-icon>phone</mat-icon>
+          <span>+216 25141113</span>
+        </a>
+        <button mat-raised-button color="primary" class="login-btn" (click)="navigateToLogin()">
+          <mat-icon>login</mat-icon>
+          Connexion
+        </button>
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,105 @@
+/* General Styling */
+.home-container {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f3f6;
+  }
+  
+  /* Hero Section */
+  .hero {
+    position: relative;
+    padding: 7rem 2rem 5rem;
+    background: url('/assets/images/fashion-hero.jpg') no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero h1 {
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+    color: #fce4ec;
+    font-family: 'Dancing Script', cursive;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #f8bbd0;
+    font-weight: 500;
+  }
+  
+  .hero-buttons button {
+    margin: 0.5rem;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border-radius: 25px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .hero-buttons button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.4);
+  }
+  
+  /* Features Section */
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 4rem 2rem;
+    background-color: #fffafc;
+    border-radius: 1.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .feature {
+    flex: 1 1 280px;
+    text-align: center;
+    padding: 2rem;
+    background: #f8bbd0;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+    color: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+  }
+  
+  .feature h3 {
+    margin: 1rem 0 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+  
+  .feature p {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  
+  .feature mat-icon {
+    font-size: 45px;
+    margin-bottom: 1rem;
+    color: white;
+  }
+  
+  /* Animations for Hover */
+  .feature:hover h3 {
+    color: #ff80ab;
+    transition: color 0.3s ease;
+  }
+  
+  .feature:hover p {
+    color: #ff4081;
+    transition: color 0.3s ease;
+  }
+  

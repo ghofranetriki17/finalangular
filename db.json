@@ -71,7 +71,7 @@
       "uid": "R9uVMln8pqa94PA4VC25mJ1KIEz2"
     },
     {
-      "id": 0,
+      "id": "0",
       "nom": "please",
       "prenom": "work",
       "email": "please@gmail.com",
@@ -79,6 +79,16 @@
       "role": "designer",
       "dateInscription": "2025-04-19T12:21:47.212Z",
       "uid": "vGpnsUTyEWQxA8KylU2OdF7ud9C3"
+    },
+    {
+      "id": 0,
+      "nom": "yalili",
+      "prenom": "ya3ini",
+      "email": "yaaaa@gmail.com",
+      "telephone": "25141113",
+      "role": "designer",
+      "dateInscription": "2025-04-19T13:32:03.274Z",
+      "uid": "LGperxwUJfVY4A2Rrl8HHioMNDJ3"
     }
   ],
   "designers": [
@@ -115,28 +125,30 @@
     {
       "id": 0,
       "membreId": 0,
-      "specialite": "cottura",
-      "anneesExperience": 8
+      "specialite": "woha",
+      "anneesExperience": 10
     }
   ],
-  "stagiaires": [   {
-    "id": "1",
-    "membreId": 8,
-    "designerTuteurId": 1,  
-    "dateDebut": "2025-04-20",
-    "dateFin": "2025-07-20",
-    "domaine": "Haute Couture",
-    "ecole": "École de la Chambre Syndicale de la Couture Parisienne"
-  },
-  {
-    "id": "2",
-    "membreId": 9,
-    "designerTuteurId": 7,  
-    "dateDebut": "2025-04-20",
-    "dateFin": "2025-10-20",
-    "domaine": "Accessoires",
-    "ecole": "Institut Français de la Mode"
-  }],
+  "stagiaires": [
+    {
+      "id": "1",
+      "membreId": 8,
+      "designerTuteurId": 1,
+      "dateDebut": "2025-04-20",
+      "dateFin": "2025-07-20",
+      "domaine": "Haute Couture",
+      "ecole": "École de la Chambre Syndicale de la Couture Parisienne"
+    },
+    {
+      "id": "2",
+      "membreId": 9,
+      "designerTuteurId": 7,
+      "dateDebut": "2025-04-20",
+      "dateFin": "2025-10-20",
+      "domaine": "Accessoires",
+      "ecole": "Institut Français de la Mode"
+    }
+  ],
   "clients": [
     {
       "id": "1",
@@ -151,6 +163,20 @@
       "prenom": "triki",
       "email": "ena@gmail.com",
       "telephone": "25141113"
+    },
+    {
+      "id": 0,
+      "nom": "elam3i",
+      "prenom": "chihemmek",
+      "email": "enaaa@gmail.com",
+      "telephone": "hohoho"
+    },
+    {
+      "id": 0,
+      "nom": "ghofrana",
+      "prenom": "triki",
+      "email": "ghgh@gmail.com",
+      "telephone": "25411133"
     }
   ],
   "collections": [
@@ -200,11 +226,20 @@
   "defiles": [
     {
       "id": "1",
-      "nom": "Gala Printemps 2024",
+      "nom": "Gala Printemps 2025",
       "date": "2024-04-15T19:00:00",
       "lieu": "Palais des Congrès",
       "nbPlacesTotal": 100,
       "description": "Présentation de la collection Printemps/Été 2024",
+      "collectionId": 1
+    },
+    {
+      "id": "0",
+      "nom": "ghofrane",
+      "date": "2025-08-17T18:20",
+      "lieu": "darna",
+      "nbPlacesTotal": 50,
+      "description": "hhhhh",
       "collectionId": 1
     }
   ],
@@ -220,6 +255,20 @@
       "id": "2",
       "defileId": 1,
       "numero": "A2",
+      "statut": "reserve",
+      "reservationId": 0
+    },
+    {
+      "id": "3",
+      "defileId": 1,
+      "numero": "A3",
+      "statut": "reserve",
+      "reservationId": 0
+    },
+    {
+      "id": "4",
+      "defileId": 1,
+      "numero": "A4",
       "statut": "reserve",
       "reservationId": 0
     }
@@ -245,6 +294,26 @@
       "placesIds": [
         "1",
         "2"
+      ]
+    },
+    {
+      "id": 0,
+      "clientId": 0,
+      "defileId": 1,
+      "dateReservation": "2025-04-19T13:30:17.344Z",
+      "nbPlaces": 1,
+      "placesIds": [
+        "3"
+      ]
+    },
+    {
+      "id": 0,
+      "clientId": 0,
+      "defileId": 1,
+      "dateReservation": "2025-04-19T14:30:28.279Z",
+      "nbPlaces": 1,
+      "placesIds": [
+        "4"
       ]
     }
   ],

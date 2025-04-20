@@ -1,0 +1,67 @@
+<p>defile-form works!</p>
+<!-- src/app/admin/defiles/defile-form/defile-form.component.html -->
+<h2 mat-dialog-title>{{ isEditMode ? 'Modifier' : 'Créer' }} un défilé</h2>
+
+<form [formGroup]="defileForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom du défilé</mat-label>
+        <input matInput formControlName="nom" placeholder="Nom du défilé">
+        <mat-error *ngIf="defileForm.get('nom')?.hasError('required')">Le nom est requis</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date et heure</mat-label>
+        <input matInput type="datetime-local" formControlName="date">
+        <mat-error *ngIf="defileForm.get('date')?.hasError('required')">La date est requise</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Lieu</mat-label>
+        <input matInput formControlName="lieu" placeholder="Lieu du défilé">
+        <mat-error *ngIf="defileForm.get('lieu')?.hasError('required')">Le lieu est requis</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre de places</mat-label>
+        <input matInput type="number" formControlName="nbPlacesTotal" min="1">
+        <mat-error *ngIf="defileForm.get('nbPlacesTotal')?.hasError('required')">Le nombre de places est requis</mat-error>
+        <mat-error *ngIf="defileForm.get('nbPlacesTotal')?.hasError('min')">Le nombre doit être supérieur à 0</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Collection</mat-label>
+        <mat-select formControlName="collectionId">
+          <mat-option>Aucune</mat-option>
+          <mat-option *ngFor="let collection of collections" [value]="collection.id">
+            {{ collection.nom }} ({{ collection.designer?.membre?.nom }} {{ collection.designer?.membre?.prenom }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="3" placeholder="Description du défilé"></textarea>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()" [disabled]="loading">Annuler</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="defileForm.invalid || loading">
+      <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+      <span *ngIf="!loading">{{ isEditMode ? 'Modifier' : 'Créer' }}</span>
+    </button>
+  </mat-dialog-actions>
+</form>

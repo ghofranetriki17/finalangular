@@ -25,11 +25,11 @@ import { AppComponent } from './app.component';
 
 // App Routing
 import { AppRoutingModule } from './app-routing.module';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
-    AppComponent
-  ],
+    AppComponent  ],
   imports: [
     // Angular Modules
     BrowserModule,
@@ -42,14 +42,15 @@ import { AppRoutingModule } from './app-routing.module';
     
     // Core & Shared Modules
     CoreModule,
-    SharedModule,
+    MatIconModule,
     
     // Feature Modules (these should be lazy-loaded via routing)
     // AuthModule,  // Commented out because it should be lazy-loaded
     // AdminModule, // Commented out because it should be lazy-loaded
     // DesignerModule, // Commented out because it should be lazy-loaded
     // PublicModule, // Commented out because it should be lazy-loaded
-    
+    PublicModule,
+
     // App Routing (should be last)
     AppRoutingModule
   ],
