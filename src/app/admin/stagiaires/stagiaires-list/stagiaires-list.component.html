@@ -1,105 +1,107 @@
-<div class="container">
-    <div class="header">
-      <h1>Gestion des Stagiaires</h1>
-      <button mat-raised-button color="primary" (click)="openDialog()">
-        <mat-icon>add</mat-icon> Ajouter un stagiaire
-      </button>
-    </div>
-  
-    <div class="content-container">
-      <mat-card>
-        <mat-card-content>
-          <div *ngIf="loading" class="loading-spinner">
-            <mat-spinner diameter="40"></mat-spinner>
-          </div>
-  
-          <div *ngIf="!loading">
-            <table mat-table [dataSource]="stagiaires" class="full-width-table">
-              <!-- ID Column -->
-              <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef>ID</th>
-                <td mat-cell *matCellDef="let element">{{element.id}}</td>
-              </ng-container>
-  
-              <!-- Nom Column -->
-              <ng-container matColumnDef="nom">
-                <th mat-header-cell *matHeaderCellDef>Nom</th>
-                <td mat-cell *matCellDef="let element">
-                  {{element.membre?.prenom}} {{element.membre?.nom}}
-                </td>
-              </ng-container>
-  
-              <!-- Designer Column -->
-              <ng-container matColumnDef="designer">
-                <th mat-header-cell *matHeaderCellDef>Designer</th>
-                <td mat-cell *matCellDef="let element">{{getDesignerName(element.designerTuteurId)}}</td>
-              </ng-container>
-  
-              <!-- Niveau Column -->
-              <ng-container matColumnDef="niveau">
-                <th mat-header-cell *matHeaderCellDef>Niveau</th>
-                <td mat-cell *matCellDef="let element">{{element.niveau}}</td>
-              </ng-container>
-  
-              <!-- Date Début Column -->
-              <ng-container matColumnDef="dateDebut">
-                <th mat-header-cell *matHeaderCellDef>Date de début</th>
-                <td mat-cell *matCellDef="let element">{{element.dateDebut | date:'dd/MM/yyyy'}}</td>
-              </ng-container>
-  
-              <!-- Date Fin Column -->
-              <ng-container matColumnDef="dateFin">
-                <th mat-header-cell *matHeaderCellDef>Date de fin</th>
-                <td mat-cell *matCellDef="let element">{{element.dateFin | date:'dd/MM/yyyy'}}</td>
-              </ng-container>
-  
-              <!-- Domaine Column -->
-              <ng-container matColumnDef="domaine">
-                <th mat-header-cell *matHeaderCellDef>Domaine</th>
-                <td mat-cell *matCellDef="let element">{{element.domaine}}</td>
-              </ng-container>
-  
-              <!-- Statut Column -->
-              <ng-container matColumnDef="statut">
-                <th mat-header-cell *matHeaderCellDef>Statut</th>
-                <td mat-cell *matCellDef="let element">
-                  <span [ngClass]="element.statut" class="status-badge">
-                    {{element.statut === 'accepte' ? 'Accepté' : element.statut === 'refuse' ? 'Refusé' : 'En attente'}}
-                  </span>
-                </td>
-              </ng-container>
-  
-              <!-- Actions Column -->
-              <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef>Actions</th>
-                <td mat-cell *matCellDef="let element">
-                  <button mat-icon-button color="primary" (click)="openDialog(element)" matTooltip="Modifier">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="accent" (click)="updateStatut(element, 'accepte')" 
-                          matTooltip="Accepter" *ngIf="element.statut === 'en_attente'">
-                    <mat-icon>check_circle</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="updateStatut(element, 'refuse')" 
-                          matTooltip="Refuser" *ngIf="element.statut === 'en_attente'">
-                    <mat-icon>cancel</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="deleteStagiaire(element.id)" matTooltip="Supprimer">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </td>
-              </ng-container>
-  
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-  
-            <div *ngIf="stagiaires.length === 0" class="no-data">
-              Aucun stagiaire trouvé.
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
+<!-- src/app/admin/stagiaires/stagiaires-list/stagiaires-list.component.html -->
+<div class="stagiaires-container">
+  <div class="header-actions">
+    <h2>Gestion des Stagiaires</h2>
+    <button mat-raised-button color="primary" (click)="openStagiaireDialog()">
+      <mat-icon>add</mat-icon>
+      Ajouter un stagiaire
+    </button>
   </div>
-  
+
+  <mat-card>
+    <mat-card-content>
+      <div class="filter-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Nom, prénom, email...">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="loading-shade" *ngIf="loading">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.id}} </td>
+          </ng-container>
+
+          <!-- Nom Column -->
+          <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.membre?.nom}} </td>
+          </ng-container>
+
+          <!-- Prénom Column -->
+          <ng-container matColumnDef="prenom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
+            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.membre?.prenom}} </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.membre?.email}} </td>
+          </ng-container>
+
+          <!-- Designer Tuteur Column -->
+          <ng-container matColumnDef="designerTuteur">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Designer Tuteur </th>
+            <td mat-cell *matCellDef="let stagiaire"> 
+              {{stagiaire.designer?.membre?.nom}} {{stagiaire.designer?.membre?.prenom}} 
+            </td>
+          </ng-container>
+
+          <!-- Date Début Column -->
+          <ng-container matColumnDef="dateDebut">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date de début </th>
+            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.dateDebut | date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <!-- Niveau Column -->
+          <ng-container matColumnDef="niveau">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Niveau </th>
+            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.niveau}} </td>
+          </ng-container>
+
+          <!-- Statut Column -->
+          <ng-container matColumnDef="statut">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut </th>
+            <td mat-cell *matCellDef="let stagiaire"> 
+              <span class="statut-badge" [ngClass]="getStatutClass(stagiaire.statut)">
+                {{stagiaire.statut === 'accepte' ? 'Accepté' : stagiaire.statut === 'refuse' ? 'Refusé' : 'En attente'}}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let stagiaire">
+              <button mat-icon-button color="primary" (click)="openStagiaireDialog(stagiaire)" matTooltip="Modifier">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteStagiaire(stagiaire)" matTooltip="Supprimer">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <!-- Row shown when there is no matching data -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="9">Aucun stagiaire trouvé</td>
+          </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

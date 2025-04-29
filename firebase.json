@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/fashion-management",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

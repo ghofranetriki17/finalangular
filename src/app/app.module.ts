@@ -26,6 +26,7 @@ import { AppComponent } from './app.component';
 // App Routing
 import { AppRoutingModule } from './app-routing.module';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,9 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
     PublicModule,
 
     // App Routing (should be last)
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

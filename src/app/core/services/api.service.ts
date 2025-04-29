@@ -11,11 +11,18 @@ import { Place } from '../../models/place';
 import { Client } from 'src/app/models/client';
 import { Designer } from 'src/app/models/designer';
 import { Stagiaire } from 'src/app/models/stagiaire';
+import { Membre } from 'src/app/models/membre';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  delete(arg0: string, id: number) {
+    throw new Error('Method not implemented.');
+  }
+  getAll(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
@@ -166,5 +173,21 @@ getReservationsWithDetails(): Observable<ReservationDefile[]> {
 
 getReservation(id: number): Observable<ReservationDefile> {
   return this.http.get<ReservationDefile>(`${this.apiUrl}/reservations-defiles/${id}?_expand=client&_expand=defile`);
+}
+
+
+
+// Add these methods to your ApiService if needed:
+
+getMembre(id: number): Observable<Membre> {
+  return this.http.get<Membre>(`${this.apiUrl}/membres/${id}`);
+}
+
+createMembre(membre: Membre): Observable<Membre> {
+  return this.http.post<Membre>(`${this.apiUrl}/membres`, membre);
+}
+
+updateMembre(membre: Membre): Observable<Membre> {
+  return this.http.put<Membre>(`${this.apiUrl}/membres/${membre.id}`, membre);
 }
 }

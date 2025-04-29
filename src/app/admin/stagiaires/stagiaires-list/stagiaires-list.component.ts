@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/admin/stagiaires/stagiaires-list/stagiaires-list.component.ts
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Stagiaire } from '../../../models/stagiaire';
-import { Designer } from '../../../models/designer';
 import { ApiService } from '../../../core/services/api.service';
 import { StagiaireFormComponent } from '../stagiaire-form/stagiaire-form.component';
 
@@ -12,10 +15,12 @@ import { StagiaireFormComponent } from '../stagiaire-form/stagiaire-form.compone
   styleUrls: ['./stagiaires-list.component.scss']
 })
 export class StagiairesListComponent implements OnInit {
-  stagiaires: Stagiaire[] = [];
-  designers: Designer[] = [];
-  displayedColumns: string[] = ['id', 'nom', 'designer', 'niveau', 'dateDebut', 'dateFin', 'domaine', 'statut', 'actions'];
+  displayedColumns: string[] = ['id', 'nom', 'prenom', 'email', 'designerTuteur', 'dateDebut', 'niveau', 'statut', 'actions'];
+  dataSource = new MatTableDataSource<Stagiaire>();
   loading = true;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private apiService: ApiService,
@@ -25,47 +30,42 @@ export class StagiairesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadStagiaires();
-    this.loadDesigners();
   }
 
-  loadStagiaires(): void {
+  loadStagiaires() {
     this.loading = true;
     this.apiService.getStagiaires().subscribe({
-      next: (data) => {
-        this.stagiaires = data;
+      next: (stagiaires) => {
+        this.dataSource.data = stagiaires;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.loading = false;
       },
       error: (error) => {
-        console.error('Erreur lors du chargement des stagiaires', error);
-        this.snackBar.open('Erreur lors du chargement des stagiaires', 'Fermer', { duration: 3000 });
+        console.error('Error loading stagiaires:', error);
+        this.snackBar.open('Erreur lors du chargement des stagiaires', 'Fermer', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
         this.loading = false;
       }
     });
   }
 
-  loadDesigners(): void {
-    this.apiService.getDesigners().subscribe({
-      next: (data) => {
-        this.designers = data;
-      },
-      error: (error) => {
-        console.error('Erreur lors du chargement des designers', error);
-      }
-    });
-  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-  getDesignerName(designerId: number): string {
-    const designer = this.designers.find(d => d.id === designerId);
-    if (designer && designer.membre) {
-      return `${designer.membre.prenom} ${designer.membre.nom}`;
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-    return 'Designer inconnu';
   }
 
-  openDialog(stagiaire?: Stagiaire): void {
+  openStagiaireDialog(stagiaire?: Stagiaire) {
     const dialogRef = this.dialog.open(StagiaireFormComponent, {
       width: '600px',
-      data: { stagiaire: stagiaire || null, designers: this.designers }
+      data: stagiaire
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -75,32 +75,34 @@ export class StagiairesListComponent implements OnInit {
     });
   }
 
-  updateStatut(stagiaire: Stagiaire, statut: 'accepte' | 'refuse'): void {
-    const updatedStagiaire = { ...stagiaire, statut };
-    this.apiService.updateStagiaire(updatedStagiaire).subscribe({
-      next: () => {
-        this.snackBar.open(`Statut du stagiaire mis à jour avec succès`, 'Fermer', { duration: 3000 });
-        this.loadStagiaires();
-      },
-      error: (error) => {
-        console.error('Erreur lors de la mise à jour du statut', error);
-        this.snackBar.open('Erreur lors de la mise à jour du statut', 'Fermer', { duration: 3000 });
-      }
-    });
-  }
-
-  deleteStagiaire(id: number): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce stagiaire ?')) {
-      this.apiService.deleteStagiaire(id).subscribe({
+  deleteStagiaire(stagiaire: Stagiaire) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer le stagiaire ${stagiaire.membre?.nom} ${stagiaire.membre?.prenom} ?`)) {
+      this.apiService.deleteStagiaire(stagiaire.id).subscribe({
         next: () => {
-          this.snackBar.open('Stagiaire supprimé avec succès', 'Fermer', { duration: 3000 });
           this.loadStagiaires();
+          this.snackBar.open('Stagiaire supprimé avec succès', 'Fermer', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          });
         },
         error: (error) => {
-          console.error('Erreur lors de la suppression du stagiaire', error);
-          this.snackBar.open('Erreur lors de la suppression du stagiaire', 'Fermer', { duration: 3000 });
+          console.error('Error deleting stagiaire:', error);
+          this.snackBar.open('Erreur lors de la suppression du stagiaire', 'Fermer', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          });
         }
       });
+    }
+  }
+
+  getStatutClass(statut: string): string {
+    switch (statut) {
+      case 'accepte': return 'statut-accepte';
+      case 'refuse': return 'statut-refuse';
+      default: return 'statut-en-attente';
     }
   }
 }

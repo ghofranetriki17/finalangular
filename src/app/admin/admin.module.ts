@@ -47,6 +47,7 @@ import { StagiairesListComponent } from './stagiaires/stagiaires-list/stagiaires
 import { DefilesListComponent } from './defiles/defiles-list/defiles-list.component';
 import { DefileFormComponent } from './defiles/defile-form/defile-form.component';
 import { ReservationsListComponent } from './defiles/reservations-list/reservations-list.component';
+import { CollectionsListComponent } from './collections/collections-list/collections-list.component';
 
 const routes: Routes = [
   {
@@ -59,9 +60,9 @@ const routes: Routes = [
       { path: 'designers', component: DesignersListComponent },
       { path: 'stagiaires', component: StagiairesListComponent },
       { path: 'designers/add', component: DesignerFormComponent },
-      /*{ path: 'designers/edit/:id', component: DesignerFormComponent },
+     { path: 'designers/edit/:id', component: DesignerFormComponent },
       { path: 'collections', component: CollectionsListComponent },
-      { path: 'collections/add', component: CollectionFormComponent },
+      /* { path: 'collections/add', component: CollectionFormComponent },
       { path: 'collections/edit/:id', component: CollectionFormComponent },
      
       { path: 'defiles/edit/:id', component: DefileFormComponent },
@@ -86,6 +87,7 @@ const routes: Routes = [
     DefilesListComponent,
     DefileFormComponent,
     ReservationsListComponent,
+    CollectionsListComponent,
     //DesignersListComponent,
     //DesignerFormComponent,
     //CollectionsListComponent,
@@ -129,7 +131,11 @@ const routes: Routes = [
     MatToolbarModule,
     MatIconModule,
     CommonModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FormsModule,
     ReactiveFormsModule
+
   ]
 })
 export class AdminModule { }
