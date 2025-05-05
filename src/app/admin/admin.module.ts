@@ -6,18 +6,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Components
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-// Removed duplicate import of DesignersListComponent
-// Removed duplicate import of DesignerFormComponent
-/*import { CollectionsListComponent } from './collections/collections-list/collections-list.component';
-import { CollectionFormComponent } from './collections/collection-form/collection-form.component';
+import { DesignersListComponent } from './designers/designers-list/designers-list.component';
+import { DesignerFormComponent } from './designers/designer-form/designer-form.component';
+import { StagiairesListComponent } from './stagiaires/stagiaires-list/stagiaires-list.component';
+import { StagiaireFormComponent } from './stagiaires/stagiaire-form/stagiaire-form.component';
 import { DefilesListComponent } from './defiles/defiles-list/defiles-list.component';
 import { DefileFormComponent } from './defiles/defile-form/defile-form.component';
-import { FormationsListComponent } from './formations/formations-list/formations-list.component';
-import { FormationFormComponent } from './formations/formation-form/formation-form.component';
-import { DemandesStageListComponent } from './demandes-stage/demandes-stage-list/demandes-stage-list.component';
-import { MaterielListComponent } from './materiel/materiel-list/materiel-list.component';
-import { MaterielFormComponent } from './materiel/materiel-form/materiel-form.component';
-import { ReservationsListComponent } from './reservations/reservations-list/reservations-list.component';*/
+import { ReservationsListComponent } from './defiles/reservations-list/reservations-list.component';
+import { CollectionsListComponent } from './collections/collections-list/collections-list.component';
+import { NgChartsModule } from 'ng2-charts';
+import { Dashboard2Component } from './dashboard2/dashboard2.component';
 
 // Material
 import { MatTableModule } from '@angular/material/table';
@@ -40,16 +38,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatToolbar, MatToolbarModule } from '@angular/material/toolbar';
-import { DesignersListComponent } from './designers/designers-list/designers-list.component';
-import { DesignerFormComponent } from './designers/designer-form/designer-form.component';
-import { StagiairesListComponent } from './stagiaires/stagiaires-list/stagiaires-list.component';
-import { DefilesListComponent } from './defiles/defiles-list/defiles-list.component';
-import { DefileFormComponent } from './defiles/defile-form/defile-form.component';
-import { ReservationsListComponent } from './defiles/reservations-list/reservations-list.component';
-import { CollectionsListComponent } from './collections/collections-list/collections-list.component';
-import { NgChartsModule } from 'ng2-charts';
-import { Dashboard2Component } from './dashboard2/dashboard2.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const routes: Routes = [
   {
@@ -62,21 +51,9 @@ const routes: Routes = [
       { path: 'designers', component: DesignersListComponent },
       { path: 'stagiaires', component: StagiairesListComponent },
       { path: 'designers/add', component: DesignerFormComponent },
-     { path: 'designers/edit/:id', component: DesignerFormComponent },
+      { path: 'designers/edit/:id', component: DesignerFormComponent },
       { path: 'collections', component: CollectionsListComponent },
       { path: 'dashboard2', component: Dashboard2Component },
-
-      /* { path: 'collections/add', component: CollectionFormComponent },
-      { path: 'collections/edit/:id', component: CollectionFormComponent },
-     
-      { path: 'defiles/edit/:id', component: DefileFormComponent },
-      { path: 'formations', component: FormationsListComponent },
-      { path: 'formations/add', component: FormationFormComponent },
-      { path: 'formations/edit/:id', component: FormationFormComponent },
-      { path: 'demandes-stage', component: DemandesStageListComponent },
-      { path: 'materiel', component: MaterielListComponent },
-      { path: 'materiel/add', component: MaterielFormComponent },
-      { path: 'materiel/edit/:id', component: MaterielFormComponent }*/
       { path: 'defiles/:id/reservations', component: ReservationsListComponent }
     ]
   }
@@ -88,31 +65,18 @@ const routes: Routes = [
     DesignersListComponent,
     DesignerFormComponent,
     StagiairesListComponent,
+    StagiaireFormComponent,
     DefilesListComponent,
     DefileFormComponent,
     ReservationsListComponent,
     CollectionsListComponent,
-    Dashboard2Component,
-    //DesignersListComponent,
-    //DesignerFormComponent,
-    //CollectionsListComponent,
-    //CollectionFormComponent,
-    //DefilesListComponent,
-    //DefileFormComponent,
-    //FormationsListComponent,
-    //FormationFormComponent,
-    //DemandesStageListComponent,
-    //MaterielListComponent,
-    //MaterielFormComponent,
-    //ReservationsListComponent
+    Dashboard2Component
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    
-    // Material
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -134,13 +98,7 @@ const routes: Routes = [
     MatListModule,
     MatMenuModule,
     MatToolbarModule,
-    MatIconModule,
-    CommonModule,
-    ReactiveFormsModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,NgChartsModule
-
+    NgChartsModule
   ]
 })
 export class AdminModule { }

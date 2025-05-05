@@ -2,7 +2,7 @@
   "membres": [
     {
       "id": "6",
-      "nom": "Saint-Laurent",
+      "nom": "Saint-Laurentt",
       "prenom": "Yves",
       "email": "yves@saintlaurent.com",
       "telephone": "0123456781",
@@ -62,8 +62,8 @@
     },
     {
       "id": "5",
-      "nom": "Triki",
-      "prenom": "Ghofrane",
+      "nom": "ghofghof",
+      "prenom": "chihhhhemek",
       "email": "fofa@gmail.com",
       "telephone": "25141113",
       "role": "designer",
@@ -119,6 +119,43 @@
       "role": "designer",
       "dateInscription": "2025-05-05T18:34:07.412Z",
       "uid": "lGX6iQIJdHaJP7UdQHIHSotz5qN2"
+    },
+    {
+      "id": 0,
+      "nom": "ssssss",
+      "prenom": "ssss",
+      "email": "ss@gmail.com",
+      "telephone": "25141113",
+      "role": "stagiaire",
+      "dateInscription": "2025-05-05T19:48:38.123Z"
+    },
+    {
+      "id": 0,
+      "nom": "www",
+      "prenom": "www",
+      "email": "ww@gmail.com",
+      "telephone": "25141112",
+      "role": "stagiaire",
+      "dateInscription": "2025-05-05T19:55:02.660Z"
+    },
+    {
+      "id": 0,
+      "nom": "t",
+      "prenom": "ddd",
+      "email": "t@gmail.com",
+      "telephone": "251411132",
+      "role": "stagiaire",
+      "dateInscription": "2025-05-05T20:37:09.566Z"
+    },
+    {
+      "id": "84ec",
+      "nom": "cccccc",
+      "prenom": "xxx",
+      "email": "x@gmail.com",
+      "telephone": "25141113",
+      "role": "designer",
+      "dateInscription": "2025-05-05T20:37:52.356Z",
+      "uid": "BVMz9UKBrKcifjnaOOCKZflM82F2"
     }
   ],
   "designers": [
@@ -153,42 +190,124 @@
       "anneesExperience": 3
     },
     {
-      "id": "0",
-      "membreId": 0,
-      "specialite": "woha",
-      "anneesExperience": 10
-    },
-    {
-      "id": "0",
-      "membreId": 0,
-      "specialite": "kamraya",
-      "anneesExperience": 10
-    },
-    {
       "id": "2b04",
       "membreId": "2b04",
       "specialite": "sans specialite",
       "anneesExperience": 5
+    },
+    {
+      "id": "84ec",
+      "membreId": "84ec",
+      "specialite": "ff",
+      "anneesExperience": 4
     }
   ],
   "stagiaires": [
     {
       "id": "1",
       "membreId": 8,
-      "designerTuteurId": 1,
+      "designerId": "7",
       "dateDebut": "2025-04-20",
-      "dateFin": "2025-07-20",
+      "niveau": "avance",
+      "statut": "accepte",
+      "membre": {
+        "id": 0,
+        "nom": "Duboiss",
+        "prenom": "Sophie",
+        "email": "sophie.dubois@email.com",
+        "telephone": "0123456783",
+        "role": "stagiaire",
+        "dateInscription": "2025-05-05T19:45:12.203Z"
+      },
       "domaine": "Haute Couture",
       "ecole": "École de la Chambre Syndicale de la Couture Parisienne"
     },
     {
       "id": "2",
       "membreId": 9,
-      "designerTuteurId": 7,
+      "designerId": "6",
       "dateDebut": "2025-04-20",
-      "dateFin": "2025-10-20",
+      "niveau": "intermediaire",
+      "statut": "en_attente",
+      "membre": {
+        "id": 0,
+        "nom": "Martin",
+        "prenom": "Luc",
+        "email": "luc.martin@email.com",
+        "telephone": "0123456784",
+        "role": "stagiaire",
+        "dateInscription": "2025-05-05T19:58:16.216Z"
+      },
       "domaine": "Accessoires",
-      "ecole": "Institut Français de la Mode"
+      "ecole": "Institut Français de la Mode",
+      "designer": {
+        "id": "5",
+        "membreId": 0,
+        "specialite": "all",
+        "anneesExperience": 3,
+        "membre": {
+          "id": "0",
+          "nom": "please",
+          "prenom": "work",
+          "email": "please@gmail.com",
+          "telephone": "25141113",
+          "role": "designer",
+          "dateInscription": "2025-04-19T12:21:47.212Z",
+          "uid": "vGpnsUTyEWQxA8KylU2OdF7ud9C3"
+        }
+      }
+    },
+    {
+      "id": "4ef5",
+      "membreId": 0,
+      "designerId": "7",
+      "dateDebut": "0011-11-11",
+      "niveau": "intermediaire",
+      "statut": "accepte",
+      "membre": {
+        "id": 0,
+        "nom": "please",
+        "prenom": "work",
+        "email": "please@gmail.com",
+        "telephone": "25141113",
+        "role": "stagiaire",
+        "dateInscription": "2025-05-05T19:58:02.265Z"
+      },
+      "domaine": "xxx",
+      "ecole": "xxx",
+      "designer": {
+        "id": "1",
+        "membreId": 2,
+        "specialite": "Haute Couture",
+        "anneesExperience": 8,
+        "membre": {
+          "id": "2",
+          "nom": "Dupont",
+          "prenom": "Marie",
+          "email": "marie.dupont@email.com",
+          "telephone": "0123456789",
+          "role": "designer",
+          "dateInscription": "2023-01-15",
+          "uid": "SsSevmf3EtUUcQl1vw6jmykbP7n2"
+        }
+      }
+    },
+    {
+      "id": "bf9e",
+      "membreId": 0,
+      "designerId": "7",
+      "dateDebut": "0004-04-04",
+      "niveau": "avance",
+      "statut": "accepte",
+      "membre": {
+        "id": 0,
+        "nom": "t",
+        "prenom": "ddd",
+        "email": "t@gmail.com",
+        "telephone": "251411132",
+        "role": "stagiaire",
+        "dateInscription": "2025-05-05T20:37:09.566Z"
+      }
     }
   ],
   "clients": [
@@ -236,15 +355,6 @@
       "id": "1"
     },
     {
-      "id": "0b60",
-      "nom": "sifalachta",
-      "saison": "Automne/Hiver",
-      "type": "Prêt-à-porter",
-      "description": "chihemmek",
-      "designerId": 1,
-      "dateCreation": "2025-04-19T11:00:46.042Z"
-    },
-    {
       "id": "8f2f",
       "nom": "test",
       "saison": "Automne/Hiver",
@@ -265,7 +375,6 @@
       "dateCreation": "2025-04-19T11:28:56.937Z"
     },
     {
-<<<<<<< Updated upstream
       "id": "273b",
       "nom": "test baya",
       "saison": "Automne/Hiver",
@@ -304,18 +413,58 @@
       "images": [],
       "designerId": 1,
       "dateCreation": "2025-05-05T18:35:07.171Z"
-=======
-      "id": "aa1f",
-      "nom": "Haloween",
+    },
+    {
+      "id": "d46d",
+      "nom": "ali",
       "saison": "Automne/Hiver",
-      "type": "Accessoires",
-      "description": "wiwiwi",
+      "type": "Haute Couture",
+      "description": "test2",
+      "images": [],
+      "designerId": "2b04",
+      "dateCreation": "2025-05-05T18:44:00.593Z"
+    },
+    {
+      "id": "9d87",
+      "nom": "hhh",
+      "saison": "Automne/Hiver",
+      "type": "Haute Couture",
+      "description": "hhhhhhh",
+      "images": [],
+      "designerId": "2b04",
+      "dateCreation": "2025-05-05T18:44:40.282Z"
+    },
+    {
+      "id": "15b7",
+      "nom": "hhhtesttest",
+      "saison": "Automne/Hiver",
+      "type": "Haute Couture",
+      "description": "2222",
+      "images": [],
+      "designerId": "2b04",
+      "dateCreation": "2025-05-05T18:49:39.457Z"
+    },
+    {
+      "id": "473a",
+      "nom": "ali test22",
+      "saison": "Automne/Hiver",
+      "type": "Haute Couture",
+      "description": "hhhh",
       "images": [
-        "IIT (3).png"
+        "Editor _ Mermaid Chart-2025-05-05-181017.png"
       ],
       "designerId": 1,
-      "dateCreation": "2025-05-03T10:40:18.820Z"
->>>>>>> Stashed changes
+      "dateCreation": "2025-05-05T20:28:11.903Z"
+    },
+    {
+      "id": "9d59",
+      "nom": "ggg",
+      "saison": "Automne/Hiver",
+      "type": "Accessoires",
+      "description": ",,n,",
+      "images": [],
+      "designerId": "2b04",
+      "dateCreation": "2025-05-05T20:29:23.895Z"
     }
   ],
   "defiles": [
@@ -343,7 +492,7 @@
       "date": "2025-05-14T18:00",
       "lieu": "test",
       "nbPlacesTotal": 50,
-      "description": "tester",
+      "description": "testerr",
       "collectionId": "1"
     }
   ],
@@ -374,20 +523,6 @@
       "defileId": 1,
       "numero": "A4",
       "statut": "reserve",
-      "reservationId": 0
-    },
-    {
-      "id": "5",
-      "defileId": 1,
-      "numero": "A5",
-      "statut": "disponible",
-      "reservationId": 0
-    },
-    {
-      "id": "6",
-      "defileId": 1,
-      "numero": "A6",
-      "statut": "disponible",
       "reservationId": 0
     }
   ],
@@ -448,7 +583,7 @@
       "statut": "en_attente"
     },
     {
-      "id": "0",
+      "id": "2",
       "nom": "tic",
       "prenom": "tac",
       "email": "ghofrane@gmail.com",

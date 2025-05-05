@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, finalize, forkJoin, of } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { catchError, finalize, switchMap } from 'rxjs/operators';
 
-import { Designer } from '../../../models/designer';
-import { Membre } from '../../../models/membre';
-import { Stagiaire } from '../../../models/stagiaire';
 import { ApiService } from '../../../core/services/api.service';
+import { Designer } from '../../../models/designer';
+import { Stagiaire } from '../../../models/stagiaire';
+import { Membre } from '../../../models/membre';
 
 @Component({
   selector: 'app-stagiaire-form',
@@ -18,218 +19,135 @@ export class StagiaireFormComponent implements OnInit {
   stagiaireForm: FormGroup;
   designers: Designer[] = [];
   isEditMode = false;
-  stagiaire: Stagiaire | null = null;
-  membre: Membre | null = null;
-  isSubmitted = false;
   loading = false;
+  isSubmitted = false;
   error: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
-    private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialogRef: MatDialogRef<StagiaireFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data?: Stagiaire
   ) {
-    this.stagiaireForm = this.initForm();
-  }
-
-  ngOnInit(): void {
-    this.loading = true;
-
-    // Load designers for dropdown
-    this.apiService.getDesigners().pipe(
-      catchError(error => {
-        this.error = "Erreur lors du chargement des designers. Veuillez réessayer.";
-        return of([]);
-      })
-    ).subscribe(designers => {
-      this.designers = designers;
-      
-      // Check if we're in edit mode
-      const stagiaireId = this.route.snapshot.paramMap.get('id');
-      if (stagiaireId) {
-        this.isEditMode = true;
-        this.loadStagiaire(Number(stagiaireId));
-      } else {
-        this.loading = false;
-      }
-    });
-  }
-
-  // Initialize form with default values
-  private initForm(): FormGroup {
-    return this.fb.group({
+    this.stagiaireForm = this.fb.group({
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telephone: [''],
       designerId: [null, Validators.required],
-      niveau: [null, Validators.required],
       dateDebut: ['', Validators.required],
-      statut: ['en_attente', Validators.required]
+      niveau: ['', Validators.required],
+      statut: ['en_attente', Validators.required],
+      domaine: [''],
+      ecole: ['']
     });
   }
 
-  // Load stagiaire data for edit mode
-  private loadStagiaire(id: number): void {
-    this.apiService.getStagiaire(id).pipe(
-      catchError(error => {
-        this.error = "Erreur lors du chargement du stagiaire. Veuillez réessayer.";
-        this.loading = false;
-        return of(null);
-      }),
+  ngOnInit(): void {
+    this.loading = true;
+    this.isEditMode = !!this.data;
+
+    this.apiService.getDesigners().pipe(
+      catchError(() => of([])),
       finalize(() => this.loading = false)
-    ).subscribe(stagiaire => {
-      if (stagiaire) {
-        this.stagiaire = stagiaire;
-        
-        // If we have membre data attached to the stagiaire
-        if (stagiaire.membre) {
-          this.membre = stagiaire.membre;
-          this.populateForm();
-        } 
-        // Else we need to fetch membre data separately - we'll simulate this since
-        // there's no specific getMembre method in ApiService
-        else {
-          // Simulate membre data for demo purposes
-          // In a real app, you would fetch this from API
-          this.membre = {
-            id: stagiaire.membreId,
-            nom: '',
-            prenom: '',
-            email: '',
-            role: 'stagiaire',
-            dateInscription: new Date().toISOString()
-          };
-          this.populateForm();
-        }
+    ).subscribe(designers => {
+      this.designers = designers;
+
+      if (this.isEditMode && this.data) {
+        this.loadFormWithData(this.data);
       }
     });
   }
 
-  // Fill form with stagiaire data
-  private populateForm(): void {
-    if (this.stagiaire && this.membre) {
-      this.stagiaireForm.patchValue({
-        nom: this.membre.nom,
-        prenom: this.membre.prenom,
-        email: this.membre.email,
-        telephone: this.membre.telephone || '',
-        designerId: this.stagiaire.designerId,
-        niveau: this.stagiaire.niveau,
-        dateDebut: this.formatDateForInput(this.stagiaire.dateDebut),
-        statut: this.stagiaire.statut
-      });
-    }
+  private loadFormWithData(stagiaire: Stagiaire): void {
+    const membre = stagiaire.membre!;
+    this.stagiaireForm.patchValue({
+      nom: membre.nom,
+      prenom: membre.prenom,
+      email: membre.email,
+      telephone: membre.telephone || '',
+      designerId: stagiaire.designerId,
+      dateDebut: stagiaire.dateDebut,
+      niveau: stagiaire.niveau,
+      statut: stagiaire.statut,
+      domaine: (stagiaire as any).domaine || '',
+      ecole: (stagiaire as any).ecole || ''
+    });
   }
 
-  // Format date string for date input (YYYY-MM-DD)
-  private formatDateForInput(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
-  }
-
-  // Get form controls for easy access in template
-  get f() {
-    return this.stagiaireForm.controls;
-  }
-
-  // Submit form handler
   onSubmit(): void {
     this.isSubmitted = true;
-
-    if (this.stagiaireForm.invalid) {
-      return;
-    }
+    if (this.stagiaireForm.invalid) return;
 
     this.loading = true;
-    this.error = null;
-
     const formData = this.stagiaireForm.value;
 
-    if (this.isEditMode) {
-      this.updateStagiaire(formData);
+    // Ne pas inclure 'id' => il sera auto-généré
+    const membre: Membre = {
+      id: 0, // Default value, will be replaced by the server
+      nom: formData.nom,
+      prenom: formData.prenom,
+      email: formData.email,
+      telephone: formData.telephone,
+      role: 'stagiaire',
+      dateInscription: new Date().toISOString()
+    };
+    
+
+    if (this.isEditMode && this.data) {
+      const stagiaire: Stagiaire = {
+        ...this.data,
+        designerId: formData.designerId,
+        dateDebut: formData.dateDebut,
+        niveau: formData.niveau,
+        statut: formData.statut,
+        membre: membre,
+        ...(formData.domaine && { domaine: formData.domaine }),
+        ...(formData.ecole && { ecole: formData.ecole })
+      };
+
+      this.apiService.updateStagiaire(stagiaire).pipe(
+        catchError(() => {
+          this.error = "Erreur lors de la mise à jour.";
+          return of(null);
+        }),
+        finalize(() => this.loading = false)
+      ).subscribe(result => {
+        if (result) this.dialogRef.close(true);
+      });
+
     } else {
-      this.createStagiaire(formData);
+      // Création membre -> puis stagiaire
+      this.apiService.createMembre(membre).pipe(
+        catchError(() => {
+          this.error = "Erreur lors de la création du membre.";
+          return of(null);
+        }),
+        switchMap((createdMembre: Membre | null) => {
+          if (!createdMembre) return of(null);
+
+          const newStagiaire: Stagiaire = {
+            membreId: createdMembre.id,
+            designerId: formData.designerId,
+            dateDebut: formData.dateDebut,
+            niveau: formData.niveau,
+            statut: formData.statut,
+            membre: createdMembre,
+            ...(formData.domaine && { domaine: formData.domaine }),
+            ...(formData.ecole && { ecole: formData.ecole })
+          };
+
+          return this.apiService.createStagiaire(newStagiaire);
+        }),
+        catchError(() => {
+          this.error = "Erreur lors de la création du stagiaire.";
+          return of(null);
+        }),
+        finalize(() => this.loading = false)
+      ).subscribe(result => {
+        if (result) this.dialogRef.close(true);
+      });
     }
-  }
-
-  // Create new stagiaire
-  private createStagiaire(formData: any): void {
-    // In a real app, you would first create a membre then create a stagiaire
-    // For demo purposes, we'll just create the stagiaire directly
-    
-    const stagiaire: Stagiaire = {
-      id: 0, // Will be assigned by server
-      membreId: 0, // This would normally come from a newly created membre
-      designerId: Number(formData.designerId),
-      dateDebut: formData.dateDebut,
-      niveau: formData.niveau,
-      statut: formData.statut,
-      // Include membre info for display purposes
-      membre: {
-        id: 0,
-        nom: formData.nom,
-        prenom: formData.prenom,
-        email: formData.email,
-        telephone: formData.telephone || undefined,
-        role: 'stagiaire',
-        dateInscription: new Date().toISOString()
-      }
-    };
-    
-    this.apiService.createStagiaire(stagiaire).pipe(
-      catchError(error => {
-        this.error = "Erreur lors de la création du stagiaire. Veuillez réessayer.";
-        this.loading = false;
-        return of(null);
-      }),
-      finalize(() => this.loading = false)
-    ).subscribe(result => {
-      if (result) {
-        this.router.navigate(['/admin/stagiaires']);
-      }
-    });
-  }
-
-  // Update existing stagiaire
-  private updateStagiaire(formData: any): void {
-    if (!this.stagiaire) {
-      this.error = "Données invalides pour la mise à jour";
-      this.loading = false;
-      return;
-    }
-
-    // Update stagiaire info
-    const stagiaire: Stagiaire = {
-      ...this.stagiaire,
-      designerId: Number(formData.designerId),
-      dateDebut: formData.dateDebut,
-      niveau: formData.niveau,
-      statut: formData.statut,
-      // Update membre info too if API supports it
-      membre: {
-        id: this.stagiaire.membreId,
-        nom: formData.nom,
-        prenom: formData.prenom,
-        email: formData.email,
-        telephone: formData.telephone || undefined,
-        role: 'stagiaire',
-        dateInscription: this.membre?.dateInscription || new Date().toISOString()
-      }
-    };
-
-    this.apiService.updateStagiaire(stagiaire).pipe(
-      catchError(error => {
-        this.error = "Erreur lors de la mise à jour du stagiaire. Veuillez réessayer.";
-        this.loading = false;
-        return of(null);
-      }),
-      finalize(() => this.loading = false)
-    ).subscribe(result => {
-      if (result) {
-        this.router.navigate(['/admin/stagiaires']);
-      }
-    });
   }
 }

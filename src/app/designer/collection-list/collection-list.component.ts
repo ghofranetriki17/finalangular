@@ -1,10 +1,12 @@
+// src/app/designer/collections/collection-list/collection-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ApiService } from '../../core/services/api.service';
-import { Collection } from '../../models/collection';
-import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { ApiService } from 'src/app/core/services/api.service';
+import { Collection } from 'src/app/models/collection';
+import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-collection-list',
@@ -15,20 +17,36 @@ export class CollectionListComponent implements OnInit {
   collections: Collection[] = [];
   displayedColumns: string[] = ['nom', 'saison', 'type', 'dateCreation', 'actions'];
   loading = true;
+  designerId: number | null = null;
 
   constructor(
     private apiService: ApiService,
     private router: Router,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) { }
+    private snackBar: MatSnackBar,
+    private afAuth: AngularFireAuth
+  ) {}
 
   ngOnInit(): void {
-    this.loadCollections();
+    this.afAuth.authState.subscribe(user => {
+      if (user?.uid) {
+        this.apiService.getMembres().subscribe(membres => {
+          const designer = membres.find(m => m.uid === user.uid && m.role === 'designer');
+          if (designer) {
+            this.designerId = designer.id;
+            this.loadCollections();
+          } else {
+            this.snackBar.open('Designer non trouvé.', 'Fermer', { duration: 3000 });
+            this.loading = false;
+          }
+        });
+      }
+    });
   }
 
   loadCollections(): void {
-    this.apiService.getCollectionsByDesigner(1).subscribe({ // Replace with actual designer ID
+    if (!this.designerId) return;
+    this.apiService.getCollectionsByDesigner(this.designerId).subscribe({
       next: (collections) => {
         this.collections = collections;
         this.loading = false;
