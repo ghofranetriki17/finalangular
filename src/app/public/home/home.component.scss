@@ -1,105 +1,148 @@
-/* General Styling */
+/* Reset & General Styling */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f3f6;
+}
+
 .home-container {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f9f3f6;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Full-Width Hero */
+.hero {
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding: 8rem 2rem;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url('/assets/images/fashion-hero.jpg') center center / cover no-repeat;
+  color: white;
+  text-align: center;
+  box-shadow: inset 0 -10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  font-family: 'Dancing Script', cursive;
+  color: #fce4ec;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #ffe4f0;
+  margin-bottom: 2.5rem;
+  line-height: 2.2;
+}
+
+/* Hero Buttons */
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hero-buttons button {
+  padding: 1rem 2.5rem;
+  font-size: 1.05rem;
+  border-radius: 30px;
+  font-weight: 600;
+  text-transform: none;
+  transition: all 0.3s ease;
+}
+
+.hero-buttons button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+}
+
+/* Features Section */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  padding: 5rem 3rem;
+  background-color: #fff;
+  margin-top: -2rem;
+}
+
+.feature {
+  background-color: #fce4ec;
+  padding: 2.5rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: all 0.3s ease;
+  line-height: 1.8;
+}
+
+.feature:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 32px rgba(255, 105, 180, 0.2);
+}
+
+.feature mat-icon {
+  font-size: 50px;
+  color: #d81b60;
+  margin-bottom: 1rem;
+}
+
+.feature h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #880e4f;
+  font-weight: 600;
+}
+
+.feature p {
+  font-size: 1.1rem;
+  color: #6a1b44;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+    white-space: normal;
   }
-  
-  /* Hero Section */
-  .hero {
-    position: relative;
-    padding: 7rem 2rem 5rem;
-    background: url('/assets/images/fashion-hero.jpg') no-repeat center center;
-    background-size: cover;
-    text-align: center;
-    color: white;
-    border-radius: 1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-  
-  .hero-content {
-    position: relative;
-    z-index: 2;
-  }
-  
-  .hero h1 {
-    font-size: 3.2rem;
-    margin-bottom: 1rem;
-    color: #fce4ec;
-    font-family: 'Dancing Script', cursive;
-  }
-  
+
   .hero p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    color: #f8bbd0;
-    font-weight: 500;
+    font-size: 1.1rem;
   }
-  
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .hero-buttons button {
-    margin: 0.5rem;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    border-radius: 25px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    max-width: 300px;
   }
-  
-  .hero-buttons button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.4);
-  }
-  
-  /* Features Section */
+
   .features {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    padding: 4rem 2rem;
-    background-color: #fffafc;
-    border-radius: 1.5rem;
-    flex-wrap: wrap;
+    padding: 3rem 1.5rem;
   }
-  
-  .feature {
-    flex: 1 1 280px;
-    text-align: center;
-    padding: 2rem;
-    background: #f8bbd0;
-    border-radius: 1.5rem;
-    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
-    color: white;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .feature:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
-  }
-  
-  .feature h3 {
-    margin: 1rem 0 0.5rem;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-  }
-  
-  .feature p {
-    font-size: 1rem;
-    font-weight: 400;
-  }
-  
-  .feature mat-icon {
-    font-size: 45px;
-    margin-bottom: 1rem;
-    color: white;
-  }
-  
-  /* Animations for Hover */
-  .feature:hover h3 {
-    color: #ff80ab;
-    transition: color 0.3s ease;
-  }
-  
-  .feature:hover p {
-    color: #ff4081;
-    transition: color 0.3s ease;
-  }
-  
+}

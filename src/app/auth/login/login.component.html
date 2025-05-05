@@ -1,36 +1,29 @@
-<!-- src/app/auth/login/login.component.html -->
 <div class="login-container">
-  <mat-card>
+  <mat-card class="login-card">
     <mat-card-header>
       <mat-card-title>Connexion</mat-card-title>
     </mat-card-header>
-    
+
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" placeholder="Entrez votre email">
-          <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
-            Email obligatoire
-          </mat-error>
-          <mat-error *ngIf="loginForm.controls['email'].hasError('email')">
-            Format d'email invalide
-          </mat-error>
+          <input matInput formControlName="email" type="email" placeholder="Entrez votre email" />
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email obligatoire</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Format d'email invalide</mat-error>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Mot de passe</mat-label>
-          <input matInput formControlName="password" type="password" placeholder="Entrez votre mot de passe">
-          <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
-            Mot de passe obligatoire
-          </mat-error>
-          <mat-error *ngIf="loginForm.controls['password'].hasError('minlength')">
+          <input matInput formControlName="password" type="password" placeholder="Entrez votre mot de passe" />
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Mot de passe obligatoire</mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
             Le mot de passe doit contenir au moins 6 caractères
           </mat-error>
         </mat-form-field>
-        
+
         <div class="button-container">
-          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || loading">
+          <button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid || loading">
             <span *ngIf="!loading">Se connecter</span>
             <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
           </button>

@@ -52,12 +52,11 @@ export class CollectionFormComponent implements OnInit {
         this.collectionForm.patchValue(collection);
         if (collection.images) {
           this.existingImages = collection.images as string[];
-          this.previewImages = [...this.existingImages];
+          this.previewImages = this.existingImages.map(name => `assets/images/${name}`);
         }
         this.loading = false;
       },
-      error: (error) => {
-        console.error('Error loading collection', error);
+      error: () => {
         this.snackBar.open('Erreur lors du chargement', 'Fermer', { duration: 3000 });
         this.loading = false;
       }
@@ -70,88 +69,49 @@ export class CollectionFormComponent implements OnInit {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         this.filesToUpload.push(file);
-        
-        // Create preview
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.previewImages.push(e.target.result);
-        };
-        reader.readAsDataURL(file);
+        this.existingImages.push(file.name);  // Only store the name
+
+        // Preview using URL.createObjectURL
+        const objectUrl = URL.createObjectURL(file);
+        this.previewImages.push(objectUrl);
+
+        // ✅ You must copy these files manually to `src/assets/images/`
       }
     }
   }
 
   removeImage(index: number): void {
-    // If it's an existing image (string), just remove from preview
-    if (index < this.existingImages.length) {
-      this.existingImages.splice(index, 1);
-    } 
-    // If it's a new upload (File), remove from both arrays
-    else {
-      const fileIndex = index - this.existingImages.length;
-      this.filesToUpload.splice(fileIndex, 1);
-    }
     this.previewImages.splice(index, 1);
+    this.existingImages.splice(index, 1);
+    if (index >= this.existingImages.length) {
+      this.filesToUpload.splice(index - this.existingImages.length, 1);
+    }
   }
 
   onSubmit(): void {
-    if (this.collectionForm.invalid) {
-      return;
-    }
+    if (this.collectionForm.invalid) return;
 
     this.loading = true;
     const collectionData: Collection = {
       ...this.collectionForm.value,
-      designerId: 1, // Replace with actual designer ID
+      designerId: 1,
       dateCreation: new Date().toISOString(),
-      images: [...this.existingImages] // Start with existing images
+      images: [...this.existingImages]
     };
 
-    // Create FormData if we have files to upload
-    let formData: FormData | null = null;
-    if (this.filesToUpload.length > 0) {
-      formData = new FormData();
-      formData.append('collection', JSON.stringify(collectionData));
-      this.filesToUpload.forEach(file => {
-        if (formData) {
-          formData.append('images', file);
-        }
-      });
-    }
+    const request = this.isEditMode && this.collectionId
+      ? this.apiService.updateCollection({ ...collectionData, id: this.collectionId! })
+      : this.apiService.createCollection(collectionData);
 
-    if (this.isEditMode && this.collectionId) {
-      collectionData.id = this.collectionId;
-      const request = formData ? 
-        this.apiService.updateCollectionWithImages(this.collectionId, formData) : 
-        this.apiService.updateCollection(collectionData);
-      
-      request.subscribe({
-        next: () => {
-          this.snackBar.open('Collection mise à jour avec succès', 'Fermer', { duration: 3000 });
-          this.router.navigate(['/designer/collections']);
-        },
-        error: (error) => {
-          console.error('Error updating collection', error);
-          this.snackBar.open('Erreur lors de la mise à jour', 'Fermer', { duration: 3000 });
-          this.loading = false;
-        }
-      });
-    } else {
-      const request = formData ? 
-        this.apiService.createCollectionWithImages(formData) : 
-        this.apiService.createCollection(collectionData);
-      
-      request.subscribe({
-        next: () => {
-          this.snackBar.open('Collection créée avec succès', 'Fermer', { duration: 3000 });
-          this.router.navigate(['/designer/collections']);
-        },
-        error: (error) => {
-          console.error('Error creating collection', error);
-          this.snackBar.open('Erreur lors de la création', 'Fermer', { duration: 3000 });
-          this.loading = false;
-        }
-      });
-    }
+    request.subscribe({
+      next: () => {
+        this.snackBar.open('Collection enregistrée avec succès', 'Fermer', { duration: 3000 });
+        this.router.navigate(['/designer/collections']);
+      },
+      error: () => {
+        this.snackBar.open('Erreur lors de l’enregistrement', 'Fermer', { duration: 3000 });
+        this.loading = false;
+      }
+    });
   }
 }

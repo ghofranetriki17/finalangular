@@ -1,0 +1,55 @@
+.demande-stage-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 16px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  
+  .loading-container,
+  .error-container {
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .error-container mat-icon {
+    font-size: 48px;
+    color: #d32f2f;
+  }
+  
+  .form-wrapper {
+    margin-top: 16px;
+  }
+  
+  .demande-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .half-width {
+    flex: 1 1 48%;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  

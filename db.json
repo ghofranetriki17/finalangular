@@ -62,8 +62,8 @@
     },
     {
       "id": "5",
-      "nom": "ghofghof",
-      "prenom": "chihhhhemek",
+      "nom": "Triki",
+      "prenom": "Ghofrane",
       "email": "fofa@gmail.com",
       "telephone": "25141113",
       "role": "designer",
@@ -265,6 +265,7 @@
       "dateCreation": "2025-04-19T11:28:56.937Z"
     },
     {
+<<<<<<< Updated upstream
       "id": "273b",
       "nom": "test baya",
       "saison": "Automne/Hiver",
@@ -303,6 +304,18 @@
       "images": [],
       "designerId": 1,
       "dateCreation": "2025-05-05T18:35:07.171Z"
+=======
+      "id": "aa1f",
+      "nom": "Haloween",
+      "saison": "Automne/Hiver",
+      "type": "Accessoires",
+      "description": "wiwiwi",
+      "images": [
+        "IIT (3).png"
+      ],
+      "designerId": 1,
+      "dateCreation": "2025-05-03T10:40:18.820Z"
+>>>>>>> Stashed changes
     }
   ],
   "defiles": [
@@ -361,6 +374,20 @@
       "defileId": 1,
       "numero": "A4",
       "statut": "reserve",
+      "reservationId": 0
+    },
+    {
+      "id": "5",
+      "defileId": 1,
+      "numero": "A5",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": "6",
+      "defileId": 1,
+      "numero": "A6",
+      "statut": "disponible",
       "reservationId": 0
     }
   ],

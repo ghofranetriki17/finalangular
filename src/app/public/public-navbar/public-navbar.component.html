@@ -1,29 +1,44 @@
-<nav class="public-navbar">
-    <div class="navbar-container">
-      <!-- Logo et nom du site -->
-      <div class="brand" routerLink="/">
-        <img src="assets/images/fashion-hero.jpg" alt="Logo" class="logo">
-        <span class="site-name">FashionApp</span>
-      </div>
-  
-      <!-- Liens de navigation -->
-      <div class="nav-links">
-        <a mat-button routerLink="/collections" routerLinkActive="active">Collections</a>
-        <a mat-button routerLink="/defiles" routerLinkActive="active">Défilés</a>
-        <a mat-button routerLink="/formations" routerLinkActive="active">Formations</a>
-        <a mat-button routerLink="/designers" routerLinkActive="active">Designers</a>
-      </div>
-  
-      <!-- Contact et login -->
-      <div class="nav-actions">
-        <a href="tel:+212612345678" class="phone-link">
-          <mat-icon>phone</mat-icon>
-          <span>+216 25141113</span>
-        </a>
-        <button mat-raised-button color="primary" class="login-btn" (click)="navigateToLogin()">
+<nav class="public-navbar mat-elevation-z4">
+  <div class="navbar-container">
+    <!-- Brand / Logo -->
+    <div class="brand" routerLink="/">
+      <img src="assets/images/fashion-hero.jpg" alt="Logo" class="logo" />
+      <span class="site-name">FashionApp</span>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="nav-links">
+      <a mat-button routerLink="/collections" routerLinkActive="active">Collections</a>
+      <a mat-button routerLink="/defiles" routerLinkActive="active">Défilés</a>
+      <a mat-button routerLink="/formations" routerLinkActive="active">Formations</a>
+      <a mat-button routerLink="/designers" routerLinkActive="active">Designers</a>
+      <ng-container *ngIf="isDesigner$ | async">
+        <a mat-button routerLink="/designer" routerLinkActive="active">Espace Designer</a>
+      </ng-container>
+    </div>
+
+    <!-- Contact & Auth Actions -->
+    <div class="nav-actions">
+      <a class="phone-link" href="tel:+21625141113">
+        <mat-icon>call</mat-icon>
+        <span class="phone-number">+216 25141113</span>
+      </a>
+
+      <!-- Show Login if NOT logged in -->
+      <ng-container *ngIf="(isLoggedIn$ | async) === false">
+        <button mat-stroked-button color="primary" class="login-btn" (click)="navigateToLogin()">
           <mat-icon>login</mat-icon>
           Connexion
         </button>
-      </div>
+      </ng-container>
+
+      <!-- Show Logout if logged in -->
+      <ng-container *ngIf="(isLoggedIn$ | async)">
+        <button mat-stroked-button color="warn" class="logout-btn" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Déconnexion
+        </button>
+      </ng-container>
     </div>
-  </nav>
+  </div>
+</nav>

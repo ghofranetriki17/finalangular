@@ -105,11 +105,11 @@ export class ApiService {
     return this.http.get<Designer[]>(`${this.apiUrl}/designers`);
   }
   createCollectionWithImages(formData: FormData): Observable<any> {
-    return this.http.post('/api/collections/with-images', formData);
+    return this.http.post('/api/collections', formData);
   }
   
   updateCollectionWithImages(id: number, formData: FormData): Observable<any> {
-    return this.http.put(`/api/collections/${id}/with-images`, formData);
+    return this.http.put(`/api/collections/${id}`, formData);
   }
 
 

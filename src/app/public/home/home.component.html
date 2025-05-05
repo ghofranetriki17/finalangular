@@ -1,39 +1,41 @@
 <div class="home-container">
-  <header class="hero">
+  <!-- Hero Section -->
+  <header class="hero mat-elevation-z4">
     <div class="hero-content">
       <h1>✨ Bienvenue dans notre univers mode ✨</h1>
       <p>
         Explorez des créations exclusives, vivez des défilés inspirants, et rejoignez une communauté passionnée par la mode. 🌸
       </p>
       <div class="hero-buttons">
-        <button mat-raised-button color="primary" (click)="navigateTo('/collections')">
-          Voir nos collections
+        <button mat-flat-button color="primary" (click)="navigateTo('/collections')">
+          <mat-icon>collections</mat-icon> Voir nos collections
         </button>
-        <button mat-raised-button color="accent" (click)="navigateTo('/defiles')">
-          Réserver un défilé
+        <button mat-flat-button color="accent" (click)="navigateTo('/defiles')">
+          <mat-icon>event</mat-icon> Réserver un défilé
         </button>
-        <button mat-raised-button color="warn" (click)="navigateTo('/demande-stage')">
-          Devenir stagiaire
+        <button mat-flat-button color="warn" (click)="navigateTo('/demande-stage')">
+          <mat-icon>school</mat-icon> Devenir stagiaire
         </button>
       </div>
     </div>
   </header>
 
+  <!-- Features Section -->
   <section class="features">
-    <div class="feature">
-      <mat-icon>style</mat-icon>
+    <div class="feature mat-elevation-z2">
+      <mat-icon class="feature-icon">style</mat-icon>
       <h3>Collections exclusives</h3>
       <p>Découvrez les créations uniques de nos designers talentueux. 💕</p>
     </div>
 
-    <div class="feature">
-      <mat-icon>event_seat</mat-icon>
+    <div class="feature mat-elevation-z2">
+      <mat-icon class="feature-icon">event_seat</mat-icon>
       <h3>Défilés de mode</h3>
       <p>Assistez à des défilés incroyables et vibrez au rythme de la mode. ✨</p>
     </div>
 
-    <div class="feature">
-      <mat-icon>school</mat-icon>
+    <div class="feature mat-elevation-z2">
+      <mat-icon class="feature-icon">school</mat-icon>
       <h3>Formations créatives</h3>
       <p>Perfectionnez vos compétences en mode avec nos formations exclusives. 🌟</p>
     </div>

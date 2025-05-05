@@ -1,98 +1,106 @@
 .defiles-container {
-    padding: 40px 20px;
-    background-color: #fef8f9;
-    font-family: 'Segoe UI', sans-serif;
-    color: #333;
-  }
-  
+  padding: 4rem 2rem;
+  font-family: 'Poppins', sans-serif;
+  background: #fef9fb;
+
   .title-section {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 3rem;
+
+    h1 {
+      font-size: 2.8rem;
+      font-family: 'Dancing Script', cursive;
+      color: #c2185b;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      color: #7b1fa2;
+      font-weight: 400;
+    }
   }
-  
-  .title-section h1 {
-    font-size: 2.8rem;
-    color: #c94f7c;
-    margin-bottom: 10px;
-  }
-  
-  .title-section .subtitle {
-    font-size: 1.1rem;
-    color: #777;
-    font-style: italic;
-  }
-  
+
   .loading-container,
   .error-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 50px 0;
+    text-align: center;
+    margin-top: 2rem;
+    color: #555;
+
+    mat-spinner {
+      margin-bottom: 1rem;
+    }
+
+    mat-icon {
+      font-size: 48px;
+      color: #e53935;
+    }
+
+    button {
+      margin-top: 1rem;
+    }
   }
-  
-  .error-container p {
-    color: #d32f2f;
-    margin-bottom: 15px;
-    font-weight: 500;
-  }
-  
+
   .defiles-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
   }
-  
+
   .defile-card {
-    background-color: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+    mat-card-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #880e4f;
+    }
+
+    mat-card-subtitle {
+      color: #6a1b9a;
+      font-weight: 500;
+    }
+
+    mat-card-content p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      color: #424242;
+
+      mat-icon {
+        vertical-align: middle;
+        margin-right: 0.3rem;
+        color: #c2185b;
+      }
+    }
+
+    mat-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+
+      button {
+        border-radius: 30px;
+        text-transform: none;
+      }
+    }
   }
-  
-  .defile-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-  }
-  
-  mat-card-title {
-    font-size: 1.6rem;
-    color: #444;
-  }
-  
-  mat-card-subtitle {
-    font-size: 0.95rem;
-    color: #888;
-  }
-  
-  .card-details p {
-    margin: 6px 0;
-    font-size: 0.95rem;
-    text-align: left;
-  }
-  
-  mat-card-actions {
+
+  .avatar-icon {
+    background-color: #f8bbd0;
     display: flex;
-    justify-content: flex-end;
-    padding: 0 16px 16px 16px;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      color: white;
+    }
   }
-  
-  .reserve-btn {
-    background-color: #d48eb1;
-    color: white;
-    border-radius: 30px;
-    padding: 8px 20px;
-  }
-  
-  .reserve-btn:hover {
-    background-color: #c94f7c;
-  }
-  
+
   .no-defiles {
-    grid-column: 1 / -1;
     text-align: center;
-    color: #999;
-    font-style: italic;
-    margin-top: 30px;
+    font-size: 1.2rem;
+    color: #757575;
+    margin-top: 2rem;
   }
-  
+}
