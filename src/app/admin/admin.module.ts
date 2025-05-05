@@ -48,6 +48,8 @@ import { DefilesListComponent } from './defiles/defiles-list/defiles-list.compon
 import { DefileFormComponent } from './defiles/defile-form/defile-form.component';
 import { ReservationsListComponent } from './defiles/reservations-list/reservations-list.component';
 import { CollectionsListComponent } from './collections/collections-list/collections-list.component';
+import { NgChartsModule } from 'ng2-charts';
+import { Dashboard2Component } from './dashboard2/dashboard2.component';
 
 const routes: Routes = [
   {
@@ -62,6 +64,8 @@ const routes: Routes = [
       { path: 'designers/add', component: DesignerFormComponent },
      { path: 'designers/edit/:id', component: DesignerFormComponent },
       { path: 'collections', component: CollectionsListComponent },
+      { path: 'dashboard2', component: Dashboard2Component },
+
       /* { path: 'collections/add', component: CollectionFormComponent },
       { path: 'collections/edit/:id', component: CollectionFormComponent },
      
@@ -88,6 +92,7 @@ const routes: Routes = [
     DefileFormComponent,
     ReservationsListComponent,
     CollectionsListComponent,
+    Dashboard2Component,
     //DesignersListComponent,
     //DesignerFormComponent,
     //CollectionsListComponent,
@@ -134,7 +139,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,NgChartsModule
 
   ]
 })

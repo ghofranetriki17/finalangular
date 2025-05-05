@@ -30,14 +30,13 @@ export class DesignerFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.initForm();
-    
     this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.isEdit = true;
+      this.isEdit = !!params['id'];
+      if (this.isEdit) {
         this.designerId = +params['id'];
         this.loadDesigner(this.designerId);
       }
+      this.initForm();
     });
   }
 
@@ -55,11 +54,11 @@ export class DesignerFormComponent implements OnInit {
 
   loadDesigner(id: number): void {
     this.isLoading = true;
-    
+
     this.http.get<Designer>(`${environment.apiUrl}/designers/${id}`).subscribe(
-      (designer) => {
+      designer => {
         this.http.get<Membre>(`${environment.apiUrl}/membres/${designer.membreId}`).subscribe(
-          (membre) => {
+          membre => {
             this.designerForm.patchValue({
               nom: membre.nom,
               prenom: membre.prenom,
@@ -68,31 +67,20 @@ export class DesignerFormComponent implements OnInit {
               specialite: designer.specialite,
               anneesExperience: designer.anneesExperience
             });
-            
             this.isLoading = false;
           },
-          (error) => {
-            console.error('Erreur lors de la récupération du membre:', error);
-            this.snackBar.open('Erreur lors du chargement des données du designer', 'Fermer', { duration: 3000 });
-            this.isLoading = false;
-          }
+          error => this.showError('Erreur lors du chargement du membre', error)
         );
       },
-      (error) => {
-        console.error('Erreur lors de la récupération du designer:', error);
-        this.snackBar.open('Erreur lors du chargement des données du designer', 'Fermer', { duration: 3000 });
-        this.isLoading = false;
-      }
+      error => this.showError('Erreur lors du chargement du designer', error)
     );
   }
 
   onSubmit(): void {
-    if (this.designerForm.invalid) {
-      return;
-    }
+    if (this.designerForm.invalid) return;
 
-    this.isLoading = true;
     const formData = this.designerForm.value;
+    this.isLoading = true;
 
     if (this.isEdit) {
       this.updateDesigner(formData);
@@ -102,108 +90,80 @@ export class DesignerFormComponent implements OnInit {
   }
 
   createDesigner(formData: any): void {
-    // Créer un compte Firebase
     this.afAuth.createUserWithEmailAndPassword(formData.email, formData.password)
       .then(credentials => {
-        if (credentials.user) {
-          const uid = credentials.user.uid;
-          
-          // Créer le membre
-          const membre: Membre = {
-            nom: formData.nom,
-            prenom: formData.prenom,
-            email: formData.email,
-            telephone: formData.telephone,
-            role: 'designer',
-            dateInscription: new Date().toISOString(),
-            uid: uid,
-            id: 0
-          };
-          
-          this.http.post<Membre>(`${environment.apiUrl}/membres`, membre).subscribe(
-            (newMembre) => {
-              // Créer le designer
-              const designer: Designer = {
-                id: newMembre.id,
-                membreId: newMembre.id,
-                specialite: formData.specialite,
-                anneesExperience: formData.anneesExperience
-              };
-              
-              this.http.post<Designer>(`${environment.apiUrl}/designers`, designer).subscribe(
-                () => {
-                  this.snackBar.open('Designer créé avec succès', 'Fermer', { duration: 3000 });
-                  this.router.navigate(['/admin/designers']);
-                },
-                (error) => {
-                  console.error('Erreur lors de la création du designer:', error);
-                  this.snackBar.open('Erreur lors de la création du designer', 'Fermer', { duration: 3000 });
-                  this.isLoading = false;
-                }
-              );
-            },
-            (error) => {
-              console.error('Erreur lors de la création du membre:', error);
-              this.snackBar.open('Erreur lors de la création du membre', 'Fermer', { duration: 3000 });
-              this.isLoading = false;
-            }
-          );
-        }
+        const uid = credentials.user?.uid;
+        if (!uid) throw new Error('Firebase UID manquant');
+
+        const membre: Partial<Membre> = {
+          nom: formData.nom,
+          prenom: formData.prenom,
+          email: formData.email,
+          telephone: formData.telephone,
+          role: 'designer',
+          dateInscription: new Date().toISOString(),
+          uid
+        };
+        
+
+        return this.http.post<Membre>(`${environment.apiUrl}/membres`, membre).toPromise();
       })
-      .catch(error => {
-        console.error('Erreur lors de la création du compte Firebase:', error);
-        this.snackBar.open(`Erreur lors de la création du compte: ${error.message}`, 'Fermer', { duration: 3000 });
-        this.isLoading = false;
-      });
+      .then((newMembre: any) => {
+        const designer: Designer = {
+          id: newMembre.id,
+          membreId: newMembre.id,
+          specialite: formData.specialite,
+          anneesExperience: formData.anneesExperience
+        };
+        return this.http.post(`${environment.apiUrl}/designers`, designer).toPromise();
+      })
+      .then(() => {
+        this.snackBar.open('Designer créé avec succès', 'Fermer', { duration: 3000 });
+        this.router.navigate(['/admin/designers']);
+      })
+      .catch(error => this.showError('Erreur lors de la création du designer', error))
+      .finally(() => this.isLoading = false);
   }
 
   updateDesigner(formData: any): void {
     this.http.get<Designer>(`${environment.apiUrl}/designers/${this.designerId}`).subscribe(
-      (designer) => {
-        // Mettre à jour le membre
+      designer => {
         const membre: Partial<Membre> = {
           nom: formData.nom,
           prenom: formData.prenom,
           email: formData.email,
           telephone: formData.telephone
         };
-        
+
         this.http.patch(`${environment.apiUrl}/membres/${designer.membreId}`, membre).subscribe(
           () => {
-            // Mettre à jour le designer
             const updatedDesigner: Partial<Designer> = {
               specialite: formData.specialite,
               anneesExperience: formData.anneesExperience
             };
-            
+
             this.http.patch(`${environment.apiUrl}/designers/${this.designerId}`, updatedDesigner).subscribe(
               () => {
                 this.snackBar.open('Designer mis à jour avec succès', 'Fermer', { duration: 3000 });
                 this.router.navigate(['/admin/designers']);
               },
-              (error) => {
-                console.error('Erreur lors de la mise à jour du designer:', error);
-                this.snackBar.open('Erreur lors de la mise à jour du designer', 'Fermer', { duration: 3000 });
-                this.isLoading = false;
-              }
+              error => this.showError('Erreur update designer', error)
             );
           },
-          (error) => {
-            console.error('Erreur lors de la mise à jour du membre:', error);
-            this.snackBar.open('Erreur lors de la mise à jour du membre', 'Fermer', { duration: 3000 });
-            this.isLoading = false;
-          }
+          error => this.showError('Erreur update membre', error)
         );
       },
-      (error) => {
-        console.error('Erreur lors de la récupération du designer:', error);
-        this.snackBar.open('Erreur lors de la mise à jour du designer', 'Fermer', { duration: 3000 });
-        this.isLoading = false;
-      }
+      error => this.showError('Erreur chargement designer', error)
     );
   }
 
   cancel(): void {
     this.router.navigate(['/admin/designers']);
+  }
+
+  private showError(message: string, error: any): void {
+    console.error(message, error);
+    this.snackBar.open(message, 'Fermer', { duration: 3000 });
+    this.isLoading = false;
   }
 }

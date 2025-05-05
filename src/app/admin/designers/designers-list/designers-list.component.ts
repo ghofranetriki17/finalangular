@@ -1,5 +1,5 @@
 // src/app/admin/designers/designers-list/designers-list.component.ts
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,7 +15,7 @@ import { Membre } from '../../../models/membre';
   templateUrl: './designers-list.component.html',
   styleUrls: ['./designers-list.component.scss']
 })
-export class DesignersListComponent implements OnInit {
+export class DesignersListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'nom', 'prenom', 'email', 'specialite', 'anneesExperience', 'actions'];
   dataSource = new MatTableDataSource<Designer & Membre>();
   isLoading = true;
@@ -40,42 +40,29 @@ export class DesignersListComponent implements OnInit {
 
   loadDesigners(): void {
     this.http.get<Designer[]>(`${environment.apiUrl}/designers`).subscribe(
-      (designers) => {
-        const designersWithDetails: Array<Designer & Membre> = [];
-        
-        // Récupérer les détails des membres pour chaque designer
-        let completedRequests = 0;
-        
-        designers.forEach(designer => {
-          this.http.get<Membre>(`${environment.apiUrl}/membres/${designer.membreId}`).subscribe(
-            (membre) => {
-              designersWithDetails.push({...designer, ...membre});
-              completedRequests++;
-              
-              if (completedRequests === designers.length) {
-                this.dataSource.data = designersWithDetails;
-                this.isLoading = false;
-              }
-            },
-            (error) => {
-              console.error(`Erreur lors de la récupération du membre ${designer.membreId}:`, error);
-              completedRequests++;
-              
-              if (completedRequests === designers.length) {
-                this.dataSource.data = designersWithDetails;
-                this.isLoading = false;
-              }
-            }
-          );
-        });
-        
-        if (designers.length === 0) {
+      designers => {
+        if (!designers.length) {
           this.isLoading = false;
+          return;
         }
+
+        const requests = designers.map(designer =>
+          this.http.get<Membre>(`${environment.apiUrl}/membres/${designer.membreId}`).toPromise()
+            .then(membre => ({ ...designer, ...membre }))
+            .catch(error => {
+              console.error(`Erreur membre ${designer.membreId}:`, error);
+              return null;
+            })
+        );
+
+        Promise.all(requests).then(results => {
+          this.dataSource.data = results.filter((r): r is Designer & Membre => r !== null);
+          this.isLoading = false;
+        });
       },
-      (error) => {
-        console.error('Erreur lors de la récupération des designers:', error);
-        this.snackBar.open('Erreur lors du chargement des designers', 'Fermer', { duration: 3000 });
+      error => {
+        console.error('Erreur designers:', error);
+        this.snackBar.open('Erreur chargement des designers', 'Fermer', { duration: 3000 });
         this.isLoading = false;
       }
     );
@@ -86,15 +73,15 @@ export class DesignersListComponent implements OnInit {
   }
 
   deleteDesigner(designer: Designer): void {
-    if (confirm(`Êtes-vous sûr de vouloir supprimer le designer ${designer.id} ?`)) {
+    if (confirm(`Supprimer le designer ${designer.id} ?`)) {
       this.http.delete(`${environment.apiUrl}/designers/${designer.id}`).subscribe(
         () => {
-          this.snackBar.open('Designer supprimé avec succès', 'Fermer', { duration: 3000 });
+          this.snackBar.open('Designer supprimé', 'Fermer', { duration: 3000 });
           this.loadDesigners();
         },
-        (error) => {
-          console.error('Erreur lors de la suppression du designer:', error);
-          this.snackBar.open('Erreur lors de la suppression du designer', 'Fermer', { duration: 3000 });
+        error => {
+          console.error('Erreur suppression:', error);
+          this.snackBar.open('Erreur suppression designer', 'Fermer', { duration: 3000 });
         }
       );
     }
@@ -103,7 +90,6 @@ export class DesignersListComponent implements OnInit {
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

@@ -1,0 +1,61 @@
+<div class="dashboard-charts">
+  <div class="chart-wrapper" *ngIf="labels['membres']">
+    <h3>Membres</h3>
+    <canvas baseChart
+            [type]="'pie'"
+            [datasets]="datasets['membres']"
+            [labels]="labels['membres']"
+            [options]="chartOptions">
+    </canvas>
+  </div>
+
+  <div class="chart-wrapper" *ngIf="labels['collections']">
+    <h3>Collections</h3>
+    <canvas baseChart
+            [type]="'bar'"
+            [datasets]="datasets['collections']"
+            [labels]="labels['collections']"
+            [options]="chartOptions">
+    </canvas>
+  </div>
+
+  <div class="chart-wrapper" *ngIf="labels['defiles']">
+    <h3>Défilés</h3>
+    <canvas baseChart
+            [type]="'bar'"
+            [datasets]="datasets['defiles']"
+            [labels]="labels['defiles']"
+            [options]="chartOptions">
+    </canvas>
+  </div>
+
+  <div class="chart-wrapper" *ngIf="labels['formations']">
+    <h3>Formations</h3>
+    <canvas baseChart
+            [type]="'bar'"
+            [datasets]="datasets['formations']"
+            [labels]="labels['formations']"
+            [options]="chartOptions">
+    </canvas>
+  </div>
+
+  <div class="chart-wrapper" *ngIf="labels['demandes']">
+    <h3>Demandes de Stage</h3>
+    <canvas baseChart
+            [type]="'doughnut'"
+            [datasets]="datasets['demandes']"
+            [labels]="labels['demandes']"
+            [options]="chartOptions">
+    </canvas>
+  </div>
+
+  <div class="chart-wrapper" *ngIf="labels['stagiaires']">
+    <h3>Stagiaires par Niveau</h3>
+    <canvas baseChart
+            [type]="'line'"
+            [datasets]="datasets['stagiaires']"
+            [labels]="labels['stagiaires']"
+            [options]="chartOptions">
+    </canvas>
+  </div>
+</div>

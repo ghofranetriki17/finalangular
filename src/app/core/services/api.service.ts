@@ -182,6 +182,9 @@ getReservation(id: number): Observable<ReservationDefile> {
 getMembre(id: number): Observable<Membre> {
   return this.http.get<Membre>(`${this.apiUrl}/membres/${id}`);
 }
+getMembres(): Observable<Membre[]> {
+  return this.http.get<Membre[]>(`${this.apiUrl}/membres`);
+}
 
 createMembre(membre: Membre): Observable<Membre> {
   return this.http.post<Membre>(`${this.apiUrl}/membres`, membre);

@@ -17,7 +17,9 @@ export class AdminDashboardComponent implements OnInit {
     { path: 'formations', label: 'Formations' },
     { path: 'demandes-stage', label: 'Demandes de stage' },
     { path: 'materiel', label: 'Matériel' },
-    { path: 'reservations', label: 'Réservations' }
+    { path: 'reservations', label: 'Réservations' },
+    { path: 'dashboard2', label: 'Dashboard' }
+
   ];
 
   constructor(private authService: AuthService, private router: Router) {}
