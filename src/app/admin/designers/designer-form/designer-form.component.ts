@@ -1,4 +1,3 @@
-// src/app/admin/designers/designer-form/designer-form.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,13 +29,14 @@ export class DesignerFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.initForm(); // Toujours initialiser le formulaire au début
+
     this.route.params.subscribe(params => {
-      this.isEdit = !!params['id'];
-      if (this.isEdit) {
+      if (params['id']) {
+        this.isEdit = true;
         this.designerId = +params['id'];
-        this.loadDesigner(this.designerId);
+        this.loadDesigner(this.designerId); // Charger les données ensuite
       }
-      this.initForm();
     });
   }
 
@@ -48,17 +48,16 @@ export class DesignerFormComponent implements OnInit {
       telephone: [''],
       specialite: ['', Validators.required],
       anneesExperience: [0, [Validators.required, Validators.min(0)]],
-      password: ['', this.isEdit ? [] : [Validators.required, Validators.minLength(6)]]
+      password: ['', Validators.minLength(6)] // pas requis en édition
     });
   }
 
   loadDesigner(id: number): void {
     this.isLoading = true;
-
-    this.http.get<Designer>(`${environment.apiUrl}/designers/${id}`).subscribe(
-      designer => {
-        this.http.get<Membre>(`${environment.apiUrl}/membres/${designer.membreId}`).subscribe(
-          membre => {
+    this.http.get<Designer>(`${environment.apiUrl}/designers/${id}`).subscribe({
+      next: (designer) => {
+        this.http.get<Membre>(`${environment.apiUrl}/membres/${designer.membreId}`).subscribe({
+          next: (membre) => {
             this.designerForm.patchValue({
               nom: membre.nom,
               prenom: membre.prenom,
@@ -69,16 +68,15 @@ export class DesignerFormComponent implements OnInit {
             });
             this.isLoading = false;
           },
-          error => this.showError('Erreur lors du chargement du membre', error)
-        );
+          error: (err) => this.showError("Erreur chargement du membre", err)
+        });
       },
-      error => this.showError('Erreur lors du chargement du designer', error)
-    );
+      error: (err) => this.showError("Erreur chargement du designer", err)
+    });
   }
 
   onSubmit(): void {
     if (this.designerForm.invalid) return;
-
     const formData = this.designerForm.value;
     this.isLoading = true;
 
@@ -93,9 +91,9 @@ export class DesignerFormComponent implements OnInit {
     this.afAuth.createUserWithEmailAndPassword(formData.email, formData.password)
       .then(credentials => {
         const uid = credentials.user?.uid;
-        if (!uid) throw new Error('Firebase UID manquant');
-  
-        const membre: Omit<Membre, 'id'> = {
+        if (!uid) throw new Error('UID Firebase manquant');
+
+        const membre: Partial<Membre> = {
           nom: formData.nom,
           prenom: formData.prenom,
           email: formData.email,
@@ -104,59 +102,56 @@ export class DesignerFormComponent implements OnInit {
           dateInscription: new Date().toISOString(),
           uid
         };
-  
-        // ✅ DO NOT send any 'id' — let JSON Server auto-generate it as a number
+
         return this.http.post<Membre>(`${environment.apiUrl}/membres`, membre).toPromise();
       })
       .then((newMembre: any) => {
-        // ✅ Now use the generated numeric ID
-        const designer: Omit<Designer, 'id'> = {
-          membreId: newMembre.id, // must be number
+        const designer: Designer = {
+          id: newMembre.id,
+          membreId: newMembre.id,
           specialite: formData.specialite,
           anneesExperience: formData.anneesExperience
         };
-  
-        return this.http.post<Designer>(`${environment.apiUrl}/designers`, designer).toPromise();
+        return this.http.post(`${environment.apiUrl}/designers`, designer).toPromise();
       })
       .then(() => {
         this.snackBar.open('Designer créé avec succès', 'Fermer', { duration: 3000 });
         this.router.navigate(['/admin/designers']);
       })
-      .catch(error => this.showError('Erreur lors de la création du designer', error))
+      .catch(err => this.showError("Erreur lors de la création du designer", err))
       .finally(() => this.isLoading = false);
   }
-  
 
   updateDesigner(formData: any): void {
-    this.http.get<Designer>(`${environment.apiUrl}/designers/${this.designerId}`).subscribe(
-      designer => {
-        const membre: Partial<Membre> = {
+    this.http.get<Designer>(`${environment.apiUrl}/designers/${this.designerId}`).subscribe({
+      next: (designer) => {
+        const membreUpdate: Partial<Membre> = {
           nom: formData.nom,
           prenom: formData.prenom,
           email: formData.email,
           telephone: formData.telephone
         };
 
-        this.http.patch(`${environment.apiUrl}/membres/${designer.membreId}`, membre).subscribe(
-          () => {
-            const updatedDesigner: Partial<Designer> = {
+        this.http.patch(`${environment.apiUrl}/membres/${designer.membreId}`, membreUpdate).subscribe({
+          next: () => {
+            const designerUpdate: Partial<Designer> = {
               specialite: formData.specialite,
               anneesExperience: formData.anneesExperience
             };
 
-            this.http.patch(`${environment.apiUrl}/designers/${this.designerId}`, updatedDesigner).subscribe(
-              () => {
+            this.http.patch(`${environment.apiUrl}/designers/${this.designerId}`, designerUpdate).subscribe({
+              next: () => {
                 this.snackBar.open('Designer mis à jour avec succès', 'Fermer', { duration: 3000 });
                 this.router.navigate(['/admin/designers']);
               },
-              error => this.showError('Erreur update designer', error)
-            );
+              error: err => this.showError("Erreur update designer", err)
+            });
           },
-          error => this.showError('Erreur update membre', error)
-        );
+          error: err => this.showError("Erreur update membre", err)
+        });
       },
-      error => this.showError('Erreur chargement designer', error)
-    );
+      error: err => this.showError("Designer non trouvé", err)
+    });
   }
 
   cancel(): void {

@@ -1,10 +1,9 @@
-// src/app/designer/collections/collection-form/collection-form.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ApiService } from 'src/app/core/services/api.service';
-import { Collection } from 'src/app/models/collection';
+import { ApiService } from '../../core/services/api.service';
+import { Collection } from '../../models/collection';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
@@ -18,8 +17,6 @@ export class CollectionFormComponent implements OnInit {
   collectionId: number | null = null;
   loading = false;
   previewImages: string[] = [];
-  existingImages: string[] = [];
-  filesToUpload: File[] = [];
   loggedInDesignerId: number | null = null;
 
   constructor(
@@ -66,13 +63,13 @@ export class CollectionFormComponent implements OnInit {
       next: (collection) => {
         this.collectionForm.patchValue(collection);
         if (collection.images) {
-          this.existingImages = collection.images as string[];
-          this.previewImages = [...this.existingImages];
+          this.collectionForm.get('images')?.setValue(collection.images);
+          this.previewImages = collection.images.map(name => `assets/images/${name}`);
         }
         this.loading = false;
       },
       error: (error) => {
-        console.error('Error loading collection', error);
+        console.error('Erreur chargement collection', error);
         this.snackBar.open('Erreur lors du chargement', 'Fermer', { duration: 3000 });
         this.loading = false;
       }
@@ -82,27 +79,23 @@ export class CollectionFormComponent implements OnInit {
   onFileSelected(event: any): void {
     const files: FileList = event.target.files;
     if (files) {
+      const imagesArray = this.collectionForm.get('images')?.value || [];
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        this.filesToUpload.push(file);
+        const fileName = file.name;
 
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.previewImages.push(e.target.result);
-        };
-        reader.readAsDataURL(file);
+        imagesArray.push(fileName);
+        this.previewImages.push(`assets/images/${fileName}`);
       }
+      this.collectionForm.get('images')?.setValue(imagesArray);
     }
   }
 
   removeImage(index: number): void {
-    if (index < this.existingImages.length) {
-      this.existingImages.splice(index, 1);
-    } else {
-      const fileIndex = index - this.existingImages.length;
-      this.filesToUpload.splice(fileIndex, 1);
-    }
     this.previewImages.splice(index, 1);
+    const images = this.collectionForm.get('images')?.value || [];
+    images.splice(index, 1);
+    this.collectionForm.get('images')?.setValue(images);
   }
 
   onSubmit(): void {
@@ -112,31 +105,16 @@ export class CollectionFormComponent implements OnInit {
     }
 
     this.loading = true;
+
     const collectionData: Collection = {
       ...this.collectionForm.value,
       designerId: this.loggedInDesignerId,
-      dateCreation: new Date().toISOString(),
-      images: [...this.existingImages]
+      dateCreation: new Date().toISOString()
     };
 
-    let formData: FormData | null = null;
-    if (this.filesToUpload.length > 0) {
-      formData = new FormData();
-      formData.append('collection', JSON.stringify(collectionData));
-      this.filesToUpload.forEach(file => {
-        formData!.append('images', file);
-      });
-    }
-
-    const request = this.isEditMode && this.collectionId ?
-      (formData ?
-        this.apiService.updateCollectionWithImages(this.collectionId, formData) :
-        this.apiService.updateCollection({ ...collectionData, id: this.collectionId })
-      ) :
-      (formData ?
-        this.apiService.createCollectionWithImages(formData) :
-        this.apiService.createCollection(collectionData)
-      );
+    const request = this.isEditMode && this.collectionId
+      ? this.apiService.updateCollection({ ...collectionData, id: this.collectionId })
+      : this.apiService.createCollection(collectionData);
 
     request.subscribe({
       next: () => {

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class PublicNavbarComponent implements OnInit {
   isLoggedIn$!: Observable<boolean>;
   isDesigner$!: Observable<boolean>;
+  isAdmin$!: Observable<boolean>;
 
   constructor(
     private router: Router,
@@ -20,6 +21,7 @@ export class PublicNavbarComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn$ = this.authService.isLoggedIn();
     this.isDesigner$ = this.authService.hasRole('designer');
+    this.isAdmin$ = this.authService.hasRole('admin');
   }
 
   navigateToLogin() {

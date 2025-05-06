@@ -36,9 +36,11 @@
             <!-- Designer Column -->
             <ng-container matColumnDef="designer">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Designer </th>
-              <td mat-cell *matCellDef="let collection"> 
-                {{collection.designer?.membre?.nom}} {{collection.designer?.membre?.prenom}} 
+              <td mat-cell *matCellDef="let collection">
+                {{ collection.designer?.nom || collection.designerId }}
               </td>
+              
+              
             </ng-container>
   
             <!-- Saison Column -->

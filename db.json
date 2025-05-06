@@ -158,24 +158,14 @@
       "uid": "BVMz9UKBrKcifjnaOOCKZflM82F2"
     },
     {
-      "id": "2dd3",
+      "id": "4dd0",
       "nom": "Jribi",
       "prenom": "Baya",
       "email": "bayajribi@gmail.com",
       "telephone": "27419784",
       "role": "designer",
-      "dateInscription": "2025-05-06T02:56:18.159Z",
-      "uid": "aEb06HUeRrVGsY6I0DfYyEgATXV2"
-    },
-    {
-      "id": "35a4",
-      "nom": "Jribi",
-      "prenom": "Baya",
-      "email": "baya.jribi@aiesec.net",
-      "telephone": "27419784",
-      "role": "designer",
-      "dateInscription": "2025-05-06T03:03:54.970Z",
-      "uid": "Fo8s4Qf3YbVFZ23XvqZHG6mdSqO2"
+      "dateInscription": "2025-05-06T06:16:06.810Z",
+      "uid": "mnq4E5WpS3VirPy6Jx9bXtMdbKE3"
     }
   ],
   "designers": [
@@ -232,6 +222,12 @@
       "membreId": "35a4",
       "specialite": "Accessoire",
       "anneesExperience": 2
+    },
+    {
+      "id": "4dd0",
+      "membreId": "4dd0",
+      "specialite": "Accessoire",
+      "anneesExperience": 3
     }
   ],
   "stagiaires": [
@@ -462,6 +458,28 @@
       "images": [],
       "designerId": "2b04",
       "dateCreation": "2025-05-05T20:29:23.895Z"
+    },
+    {
+      "id": "ddaf",
+      "nom": "printement",
+      "saison": "Croisière",
+      "type": "Accessoires",
+      "description": "",
+      "images": [],
+      "designerId": "5",
+      "dateCreation": "2025-05-06T05:13:38.939Z"
+    },
+    {
+      "id": "2d58",
+      "nom": "Boucle",
+      "saison": "Printemps/Été",
+      "type": "Accessoires",
+      "description": "boucle",
+      "images": [
+        "IIT (3).png"
+      ],
+      "designerId": "2b04",
+      "dateCreation": "2025-05-06T05:43:02.743Z"
     }
   ],
   "defiles": [
@@ -484,12 +502,12 @@
       "collectionId": 1
     },
     {
-      "id": "e121",
-      "nom": "testt",
-      "date": "2025-05-14T18:00",
-      "lieu": "test",
-      "nbPlacesTotal": 50,
-      "description": "testerr",
+      "id": 15,
+      "nom": "Met Gala",
+      "date": "2025-05-20T20:00",
+      "lieu": "Sfax",
+      "nbPlacesTotal": 20,
+      "description": "test",
       "collectionId": "1"
     }
   ],
@@ -520,6 +538,146 @@
       "defileId": 1,
       "numero": "A4",
       "statut": "reserve",
+      "reservationId": 0
+    },
+    {
+      "id": 5,
+      "defileId": 15,
+      "numero": "A1",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 6,
+      "defileId": 15,
+      "numero": "A14",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 7,
+      "defileId": 15,
+      "numero": "A15",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 8,
+      "defileId": 15,
+      "numero": "A16",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 8,
+      "defileId": 15,
+      "numero": "A17",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 9,
+      "defileId": 15,
+      "numero": "A18",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 9,
+      "defileId": 15,
+      "numero": "A19",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 9,
+      "defileId": 15,
+      "numero": "A20",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 10,
+      "defileId": 15,
+      "numero": "A2",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 11,
+      "defileId": 15,
+      "numero": "A3",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 12,
+      "defileId": 15,
+      "numero": "A4",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 13,
+      "defileId": 15,
+      "numero": "A5",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 14,
+      "defileId": 15,
+      "numero": "A6",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 15,
+      "defileId": 15,
+      "numero": "A7",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 16,
+      "defileId": 15,
+      "numero": "A8",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 17,
+      "defileId": 15,
+      "numero": "A9",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 18,
+      "defileId": 15,
+      "numero": "A10",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 19,
+      "defileId": 15,
+      "numero": "A11",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 20,
+      "defileId": 15,
+      "numero": "A12",
+      "statut": "disponible",
+      "reservationId": 0
+    },
+    {
+      "id": 21,
+      "defileId": 15,
+      "numero": "A13",
+      "statut": "disponible",
       "reservationId": 0
     }
   ],

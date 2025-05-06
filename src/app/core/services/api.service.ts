@@ -51,6 +51,9 @@ export class ApiService {
   deleteCollection(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/collections/${id}`);
   }
+  createPlace(place: any) {
+    return this.http.post(`${this.apiUrl}/places`, place);
+  }  
 
   // Défilés
   getDefiles(): Observable<Defile[]> {

@@ -24,7 +24,7 @@ export class DefileFormComponent implements OnInit {
     private dialogRef: MatDialogRef<DefileFormComponent>,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: Defile
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isEditMode = !!this.data.id;
@@ -56,22 +56,24 @@ export class DefileFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.defileForm.invalid) {
-      return;
-    }
+    if (this.defileForm.invalid) return;
 
     this.loading = true;
-    const defile: Defile = {
+    const defileData: Defile = {
       ...this.data,
       ...this.defileForm.value
     };
 
     const operation = this.isEditMode
-      ? this.apiService.updateDefile(defile)
-      : this.apiService.createDefile(defile);
+      ? this.apiService.updateDefile(defileData)
+      : this.apiService.createDefile(defileData);
 
     operation.subscribe({
-      next: () => {
+      next: (createdDefile: Defile) => {
+        if (!this.isEditMode) {
+          this.createPlacesForDefile(createdDefile.id, createdDefile.nbPlacesTotal);
+        }
+
         this.snackBar.open(
           `Défilé ${this.isEditMode ? 'modifié' : 'créé'} avec succès`,
           'Fermer',
@@ -88,6 +90,22 @@ export class DefileFormComponent implements OnInit {
         );
         this.loading = false;
       }
+    });
+  }
+
+  createPlacesForDefile(defileId: number, total: number): void {
+    const places = Array.from({ length: total }).map((_, i) => ({
+      defileId,
+      numero: `A${i + 1}`,
+      statut: 'disponible',
+      reservationId: 0
+    }));
+
+    places.forEach(place => {
+      this.apiService.createPlace(place).subscribe({
+        next: () => {},
+        error: err => console.error('Erreur création place', err)
+      });
     });
   }
 

@@ -8,6 +8,6 @@ export interface Collection {
   type: string;
   description?: string;
   dateCreation: string;
-  images?: (string | File)[]; // Allow both strings (existing images) and Files (new uploads)
+  images?: (string)[]; // Allow both strings (existing images) and Files (new uploads)
   designer?: Designer;
 }
