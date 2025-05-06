@@ -1,0 +1,38 @@
+.defiles-container {
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #3f51b5;
+  }
+}
+
+.filter-field {
+  width: 300px;
+  margin-bottom: 16px;
+}
+
+.loading-shade {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.no-data {
+  text-align: center;
+  margin-top: 30px;
+  color: gray;
+}
+
+.defiles-table-card {
+  padding: 16px;
+  border-radius: 8px;
+}

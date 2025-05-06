@@ -100,9 +100,12 @@ export class StagiairesListComponent implements OnInit {
 
   getStatutClass(statut: string): string {
     switch (statut) {
-      case 'accepte': return 'statut-accepte';
-      case 'refuse': return 'statut-refuse';
-      default: return 'statut-en-attente';
-    }
+      case 'accepte':
+        return 'accepte';
+      case 'refuse':
+        return 'refuse';
+      default:
+        return 'en_attente';
+    }  
   }
 }

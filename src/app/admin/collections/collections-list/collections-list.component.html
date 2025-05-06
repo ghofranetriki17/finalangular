@@ -1,16 +1,13 @@
 <!-- src/app/admin/collections/collections-list/collections-list.component.html -->
 <div class="collections-container">
-    <div class="header-actions">
-      <h2>Gestion des Collections</h2>
-      <button mat-raised-button color="primary" (click)="addCollection()">
-        <mat-icon>add</mat-icon>
-        Ajouter une collection
-      </button>
-    </div>
+
   
     <mat-card>
       <mat-card-content>
         <div class="filter-container">
+          <div class="header-actions">
+            <h2>Gestion des Collections</h2>
+          </div>
           <mat-form-field appearance="outline">
             <mat-label>Rechercher</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Printemps 2025">

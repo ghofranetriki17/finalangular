@@ -94,8 +94,8 @@ export class DesignerFormComponent implements OnInit {
       .then(credentials => {
         const uid = credentials.user?.uid;
         if (!uid) throw new Error('Firebase UID manquant');
-
-        const membre: Partial<Membre> = {
+  
+        const membre: Omit<Membre, 'id'> = {
           nom: formData.nom,
           prenom: formData.prenom,
           email: formData.email,
@@ -104,18 +104,19 @@ export class DesignerFormComponent implements OnInit {
           dateInscription: new Date().toISOString(),
           uid
         };
-        
-
+  
+        // ✅ DO NOT send any 'id' — let JSON Server auto-generate it as a number
         return this.http.post<Membre>(`${environment.apiUrl}/membres`, membre).toPromise();
       })
       .then((newMembre: any) => {
-        const designer: Designer = {
-          id: newMembre.id,
-          membreId: newMembre.id,
+        // ✅ Now use the generated numeric ID
+        const designer: Omit<Designer, 'id'> = {
+          membreId: newMembre.id, // must be number
           specialite: formData.specialite,
           anneesExperience: formData.anneesExperience
         };
-        return this.http.post(`${environment.apiUrl}/designers`, designer).toPromise();
+  
+        return this.http.post<Designer>(`${environment.apiUrl}/designers`, designer).toPromise();
       })
       .then(() => {
         this.snackBar.open('Designer créé avec succès', 'Fermer', { duration: 3000 });
@@ -124,6 +125,7 @@ export class DesignerFormComponent implements OnInit {
       .catch(error => this.showError('Erreur lors de la création du designer', error))
       .finally(() => this.isLoading = false);
   }
+  
 
   updateDesigner(formData: any): void {
     this.http.get<Designer>(`${environment.apiUrl}/designers/${this.designerId}`).subscribe(

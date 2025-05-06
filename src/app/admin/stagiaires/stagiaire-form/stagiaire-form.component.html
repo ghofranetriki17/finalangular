@@ -1,77 +1,78 @@
-<mat-card>
-    <mat-card-title>{{ isEditMode ? 'Modifier un stagiaire' : 'Ajouter un stagiaire' }}</mat-card-title>
-    <mat-card-content>
-      <form [formGroup]="stagiaireForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <mat-form-field appearance="outline">
-            <mat-label>Nom</mat-label>
-            <input matInput formControlName="nom" required />
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>Prénom</mat-label>
-            <input matInput formControlName="prenom" required />
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" required type="email" />
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>Téléphone</mat-label>
-            <input matInput formControlName="telephone" />
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>Designer Tuteur</mat-label>
-            <mat-select formControlName="designerId" required>
-              <mat-option *ngFor="let d of designers" [value]="d.id">
-                {{ d.membre?.nom }} {{ d.membre?.prenom }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>Date de début</mat-label>
-            <input matInput type="date" formControlName="dateDebut" />
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>Niveau</mat-label>
-            <mat-select formControlName="niveau">
-              <mat-option value="debutant">Débutant</mat-option>
-              <mat-option value="intermediaire">Intermédiaire</mat-option>
-              <mat-option value="avance">Avancé</mat-option>
-            </mat-select>
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>Statut</mat-label>
-            <mat-select formControlName="statut">
-              <mat-option value="en_attente">En attente</mat-option>
-              <mat-option value="accepte">Accepté</mat-option>
-              <mat-option value="refuse">Refusé</mat-option>
-            </mat-select>
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>Domaine</mat-label>
-            <input matInput formControlName="domaine" />
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-label>École</mat-label>
-            <input matInput formControlName="ecole" />
-          </mat-form-field>
-        </div>
-  
-        <div class="form-actions">
-          <button mat-raised-button color="primary" type="submit" [disabled]="stagiaireForm.invalid || loading">
-            {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
-          </button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-  
+<mat-card class="stagiaire-form-card">
+  <mat-card-title class="form-title">
+    {{ isEditMode ? 'Modifier un Stagiaire' : 'Ajouter un Stagiaire' }}
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="stagiaireForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="nom" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="prenom" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="telephone" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Designer Tuteur</mat-label>
+          <mat-select formControlName="designerId" required>
+            <mat-option *ngFor="let d of designers" [value]="d.id">
+              {{ d.membre?.nom }} {{ d.membre?.prenom }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Date de début</mat-label>
+          <input matInput type="date" formControlName="dateDebut" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Niveau</mat-label>
+          <mat-select formControlName="niveau">
+            <mat-option value="debutant">Débutant</mat-option>
+            <mat-option value="intermediaire">Intermédiaire</mat-option>
+            <mat-option value="avance">Avancé</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Statut</mat-label>
+          <mat-select formControlName="statut">
+            <mat-option value="en_attente">En attente</mat-option>
+            <mat-option value="accepte">Accepté</mat-option>
+            <mat-option value="refuse">Refusé</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Domaine</mat-label>
+          <input matInput formControlName="domaine" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>École</mat-label>
+          <input matInput formControlName="ecole" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="stagiaireForm.invalid || loading">
+          {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

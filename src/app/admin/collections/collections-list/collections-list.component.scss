@@ -1,0 +1,37 @@
+.collections-container {
+    padding: 24px;
+  
+    .filter-container {
+      display: flex;
+      justify-content: space-between; // 👈 Titre à gauche, recherche à droite
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+  
+      .header-actions {
+        h2 {
+          margin: 0;
+          font-size: 24px;
+          font-weight: 600;
+          color: #3f51b5;
+        }
+      }
+  
+      mat-form-field {
+        width: 300px;
+        min-width: 200px;
+      }
+    }
+  
+    .loading-shade {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+  
+    .table-container {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+  }
+  

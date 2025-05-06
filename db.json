@@ -156,6 +156,26 @@
       "role": "designer",
       "dateInscription": "2025-05-05T20:37:52.356Z",
       "uid": "BVMz9UKBrKcifjnaOOCKZflM82F2"
+    },
+    {
+      "id": "2dd3",
+      "nom": "Jribi",
+      "prenom": "Baya",
+      "email": "bayajribi@gmail.com",
+      "telephone": "27419784",
+      "role": "designer",
+      "dateInscription": "2025-05-06T02:56:18.159Z",
+      "uid": "aEb06HUeRrVGsY6I0DfYyEgATXV2"
+    },
+    {
+      "id": "35a4",
+      "nom": "Jribi",
+      "prenom": "Baya",
+      "email": "baya.jribi@aiesec.net",
+      "telephone": "27419784",
+      "role": "designer",
+      "dateInscription": "2025-05-06T03:03:54.970Z",
+      "uid": "Fo8s4Qf3YbVFZ23XvqZHG6mdSqO2"
     }
   ],
   "designers": [
@@ -200,6 +220,18 @@
       "membreId": "84ec",
       "specialite": "ff",
       "anneesExperience": 4
+    },
+    {
+      "id": 0,
+      "membreId": "2dd3",
+      "specialite": "Accessoire",
+      "anneesExperience": 1
+    },
+    {
+      "id": "fb73",
+      "membreId": "35a4",
+      "specialite": "Accessoire",
+      "anneesExperience": 2
     }
   ],
   "stagiaires": [
@@ -225,7 +257,7 @@
     {
       "id": "2",
       "membreId": 9,
-      "designerId": "6",
+      "designerId": "7",
       "dateDebut": "2025-04-20",
       "niveau": "intermediaire",
       "statut": "en_attente",
@@ -236,7 +268,7 @@
         "email": "luc.martin@email.com",
         "telephone": "0123456784",
         "role": "stagiaire",
-        "dateInscription": "2025-05-05T19:58:16.216Z"
+        "dateInscription": "2025-05-06T03:32:30.186Z"
       },
       "domaine": "Accessoires",
       "ecole": "Institut Français de la Mode",
@@ -254,41 +286,6 @@
           "role": "designer",
           "dateInscription": "2025-04-19T12:21:47.212Z",
           "uid": "vGpnsUTyEWQxA8KylU2OdF7ud9C3"
-        }
-      }
-    },
-    {
-      "id": "4ef5",
-      "membreId": 0,
-      "designerId": "7",
-      "dateDebut": "0011-11-11",
-      "niveau": "intermediaire",
-      "statut": "accepte",
-      "membre": {
-        "id": 0,
-        "nom": "please",
-        "prenom": "work",
-        "email": "please@gmail.com",
-        "telephone": "25141113",
-        "role": "stagiaire",
-        "dateInscription": "2025-05-05T19:58:02.265Z"
-      },
-      "domaine": "xxx",
-      "ecole": "xxx",
-      "designer": {
-        "id": "1",
-        "membreId": 2,
-        "specialite": "Haute Couture",
-        "anneesExperience": 8,
-        "membre": {
-          "id": "2",
-          "nom": "Dupont",
-          "prenom": "Marie",
-          "email": "marie.dupont@email.com",
-          "telephone": "0123456789",
-          "role": "designer",
-          "dateInscription": "2023-01-15",
-          "uid": "SsSevmf3EtUUcQl1vw6jmykbP7n2"
         }
       }
     },

@@ -1,15 +1,15 @@
-<!-- src/app/admin/stagiaires/stagiaires-list/stagiaires-list.component.html -->
 <div class="stagiaires-container">
-  <div class="header-actions">
-    <h2>Gestion des Stagiaires</h2>
-    <button mat-raised-button color="primary" (click)="openStagiaireDialog()">
-      <mat-icon>add</mat-icon>
-      Ajouter un stagiaire
-    </button>
-  </div>
-
   <mat-card>
     <mat-card-content>
+
+      <div class="header-actions">
+        <h2>Gestion des Stagiaires</h2>
+        <button mat-raised-button color="primary" (click)="openStagiaireDialog()">
+          <mat-icon>add</mat-icon>
+          Ajouter un stagiaire
+        </button>
+      </div>
+
       <div class="filter-container">
         <mat-form-field appearance="outline">
           <mat-label>Rechercher</mat-label>
@@ -24,63 +24,64 @@
 
       <div class="table-container">
         <table mat-table [dataSource]="dataSource" matSort>
+
           <!-- ID Column -->
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.id}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let stagiaire"> {{ stagiaire.id }} </td>
           </ng-container>
 
           <!-- Nom Column -->
           <ng-container matColumnDef="nom">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.membre?.nom}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+            <td mat-cell *matCellDef="let stagiaire"> {{ stagiaire.membre?.nom }} </td>
           </ng-container>
 
           <!-- Prénom Column -->
           <ng-container matColumnDef="prenom">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
-            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.membre?.prenom}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</th>
+            <td mat-cell *matCellDef="let stagiaire"> {{ stagiaire.membre?.prenom }} </td>
           </ng-container>
 
           <!-- Email Column -->
           <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.membre?.email}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <td mat-cell *matCellDef="let stagiaire"> {{ stagiaire.membre?.email }} </td>
           </ng-container>
 
-          <!-- Designer Tuteur Column -->
+          <!-- Designer Tuteur -->
           <ng-container matColumnDef="designerTuteur">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Designer Tuteur </th>
-            <td mat-cell *matCellDef="let stagiaire"> 
-              {{stagiaire.designer?.membre?.nom}} {{stagiaire.designer?.membre?.prenom}} 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Designer Tuteur</th>
+            <td mat-cell *matCellDef="let stagiaire">
+              {{ stagiaire.designer?.membre?.nom }} {{ stagiaire.designer?.membre?.prenom }}
             </td>
           </ng-container>
 
-          <!-- Date Début Column -->
+          <!-- Date Début -->
           <ng-container matColumnDef="dateDebut">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date de début </th>
-            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.dateDebut | date:'dd/MM/yyyy'}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de début</th>
+            <td mat-cell *matCellDef="let stagiaire"> {{ stagiaire.dateDebut | date: 'dd/MM/yyyy' }} </td>
           </ng-container>
 
-          <!-- Niveau Column -->
+          <!-- Niveau -->
           <ng-container matColumnDef="niveau">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Niveau </th>
-            <td mat-cell *matCellDef="let stagiaire"> {{stagiaire.niveau}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Niveau</th>
+            <td mat-cell *matCellDef="let stagiaire"> {{ stagiaire.niveau }} </td>
           </ng-container>
 
-          <!-- Statut Column -->
+          <!-- Statut -->
           <ng-container matColumnDef="statut">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut </th>
-            <td mat-cell *matCellDef="let stagiaire"> 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+            <td mat-cell *matCellDef="let stagiaire">
               <span class="statut-badge" [ngClass]="getStatutClass(stagiaire.statut)">
-                {{stagiaire.statut === 'accepte' ? 'Accepté' : stagiaire.statut === 'refuse' ? 'Refusé' : 'En attente'}}
+                {{ stagiaire.statut === 'accepte' ? 'Accepté' : stagiaire.statut === 'refuse' ? 'Refusé' : 'En attente' }}
               </span>
             </td>
           </ng-container>
 
-          <!-- Actions Column -->
+          <!-- Actions -->
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let stagiaire">
               <button mat-icon-button color="primary" (click)="openStagiaireDialog(stagiaire)" matTooltip="Modifier">
                 <mat-icon>edit</mat-icon>
@@ -91,10 +92,11 @@
             </td>
           </ng-container>
 
+          <!-- Table Rows -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-          <!-- Row shown when there is no matching data -->
+          <!-- No Data -->
           <tr class="mat-row" *matNoDataRow>
             <td class="mat-cell" colspan="9">Aucun stagiaire trouvé</td>
           </tr>

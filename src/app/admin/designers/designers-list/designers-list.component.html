@@ -1,81 +1,84 @@
 <div class="designers-container">
-  <div class="header">
-    <h2>Gestion des Designers</h2>
-    <button mat-raised-button color="primary" routerLink="/admin/designers/add">
-      <mat-icon>add</mat-icon> Ajouter un Designer
-    </button>
-  </div>
+  <mat-card>
+    <mat-card-content>
 
-  <mat-form-field class="filter">
-    <mat-label>Filtrer</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Dupont" #input>
-  </mat-form-field>
+      <!-- En-tête : titre + bouton d'ajout -->
+      <div class="header-container">
+        <h2 class="title">Gestion des Designers</h2>
+        <button mat-raised-button color="primary" routerLink="/admin/designers/add">
+          <mat-icon>add</mat-icon>
+          Ajouter un Designer
+        </button>
+      </div>
 
-  <div class="spinner-container" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
+      <!-- Barre de filtre -->
+      <div class="filter-container">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Filtrer</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Dupont" #input>
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
 
-  <div class="table-container" *ngIf="!isLoading">
-    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Spinner -->
+      <div class="spinner-container" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+      </div>
 
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let designer"> {{designer.id}} </td>
-      </ng-container>
+      <!-- Tableau -->
+      <div class="table-container" *ngIf="!isLoading">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
 
-      <!-- Nom Column -->
-      <ng-container matColumnDef="nom">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-        <td mat-cell *matCellDef="let designer"> {{designer.nom}} </td>
-      </ng-container>
+          <!-- Colonnes -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let d"> {{ d.id }} </td>
+          </ng-container>
 
-      <!-- Prénom Column -->
-      <ng-container matColumnDef="prenom">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
-        <td mat-cell *matCellDef="let designer"> {{designer.prenom}} </td>
-      </ng-container>
+          <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+            <td mat-cell *matCellDef="let d"> {{ d.nom }} </td>
+          </ng-container>
 
-      <!-- Email Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-        <td mat-cell *matCellDef="let designer"> {{designer.email}} </td>
-      </ng-container>
+          <ng-container matColumnDef="prenom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Prénom</th>
+            <td mat-cell *matCellDef="let d"> {{ d.prenom }} </td>
+          </ng-container>
 
-      <!-- Spécialité Column -->
-      <ng-container matColumnDef="specialite">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Spécialité </th>
-        <td mat-cell *matCellDef="let designer"> {{designer.specialite}} </td>
-      </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <td mat-cell *matCellDef="let d"> {{ d.email }} </td>
+          </ng-container>
 
-      <!-- Années d'expérience Column -->
-      <ng-container matColumnDef="anneesExperience">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Expérience </th>
-        <td mat-cell *matCellDef="let designer"> {{designer.anneesExperience}} ans </td>
-      </ng-container>
+          <ng-container matColumnDef="specialite">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Spécialité</th>
+            <td mat-cell *matCellDef="let d"> {{ d.specialite }} </td>
+          </ng-container>
 
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Actions </th>
-        <td mat-cell *matCellDef="let designer">
-          <button mat-icon-button color="primary" (click)="editDesigner(designer)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteDesigner(designer)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+          <ng-container matColumnDef="anneesExperience">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Expérience</th>
+            <td mat-cell *matCellDef="let d"> {{ d.anneesExperience }} ans </td>
+          </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let d">
 
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="7">Aucun designer trouvé avec le filtre "{{input.value}}"</td>
-      </tr>
-    </table>
+            </td>
+          </ng-container>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Sélectionner la page"></mat-paginator>
-  </div>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="7">
+              Aucun designer trouvé avec le filtre "{{ input.value }}"
+            </td>
+          </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Sélectionner la page"></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

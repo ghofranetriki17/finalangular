@@ -101,7 +101,4 @@ export class CollectionsListComponent implements OnInit {
     });
   }
 
-  addCollection() {
-    this.router.navigate(['/admin/collections/add']);
-  }
 }
